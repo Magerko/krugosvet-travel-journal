@@ -5,11 +5,11 @@
 
 import re
 from flask import Blueprint, jsonify
-from datetime import datetime
+from datetime import datetime, date
 
 from extensions import db
 from models import ConsultRequest, Excursion
-from ._helpers import current_user, login_required, get_json, log_action
+from ._helpers import current_user, login_required, get_json, log_action, clean_text
 
 bp = Blueprint("requests", __name__)
 
@@ -22,10 +22,10 @@ def create():
     """Создать заявку. Залогиненность необязательна."""
     data = get_json()
 
-    full_name = (data.get("full_name") or "").strip()
+    full_name = clean_text(data.get("full_name"), max_len=120)
     email = (data.get("email") or "").strip().lower()
     phone = (data.get("phone") or "").strip()
-    message = (data.get("message") or "").strip()
+    message = clean_text(data.get("message"))
     desired_str = (data.get("desired_date") or "").strip()
     excursion_id = data.get("excursion_id")
 
@@ -45,6 +45,8 @@ def create():
             desired_date = datetime.strptime(desired_str, "%Y-%m-%d").date()
         except ValueError:
             return jsonify(error="bad_date", fields={"desired_date": "Дата в формате ГГГГ-ММ-ДД"}), 400
+        if desired_date < date.today():
+            return jsonify(error="past_date", fields={"desired_date": "Дата не может быть в прошлом"}), 400
 
     # Если ID экскурсии передан, проверим что она существует. Иначе оставим NULL.
     if excursion_id:

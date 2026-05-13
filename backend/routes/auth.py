@@ -7,7 +7,7 @@ import re
 from flask import Blueprint, jsonify, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from extensions import db
+from extensions import db, limiter
 from models import User
 from ._helpers import current_user, get_json, log_action
 
@@ -20,6 +20,7 @@ EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 @bp.post("/register")
+@limiter.limit("10 per hour", error_message="too_many_attempts")
 def register():
     data = get_json()
     email = (data.get("email") or "").strip().lower()
@@ -59,6 +60,7 @@ def register():
 
 
 @bp.post("/login")
+@limiter.limit("8 per minute", error_message="too_many_attempts")
 def login():
     data = get_json()
     email = (data.get("email") or "").strip().lower()

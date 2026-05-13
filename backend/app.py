@@ -8,7 +8,8 @@ from pathlib import Path
 from flask import Flask, send_from_directory, jsonify
 
 from config import Config
-from extensions import db
+from extensions import db, csrf, limiter
+from flask_wtf.csrf import generate_csrf, CSRFError
 
 
 # Папка с фронтом — она лежит рядом с backend/, на уровень выше
@@ -19,6 +20,8 @@ def create_app():
     app = Flask(__name__, static_folder=None)
     app.config.from_object(Config)
     db.init_app(app)
+    csrf.init_app(app)
+    limiter.init_app(app)
 
     # Импортируем модели, чтобы SQLAlchemy их зарегистрировала
     from models import (  # noqa: F401
@@ -53,6 +56,17 @@ def create_app():
     def cli_seed():
         from seed import seed_users_and_demo
         seed_users_and_demo()
+
+    # Эндпоинт для получения CSRF-токена. Фронт дёргает его перед любым
+    # state-changing запросом и кладёт результат в заголовок X-CSRFToken.
+    @app.get("/api/csrf")
+    def csrf_token():
+        return jsonify(token=generate_csrf())
+
+    # Аккуратный JSON-ответ при отсутствии или неверном CSRF
+    @app.errorhandler(CSRFError)
+    def _csrf_error(e):
+        return jsonify(error="csrf_failed", message=str(e.description)), 400
 
     # ---------- Раздача фронта ----------
     @app.route("/")

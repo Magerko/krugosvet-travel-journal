@@ -6,7 +6,7 @@ from flask import Blueprint, jsonify, request
 
 from extensions import db
 from models import Excursion, Destination, Country, Comment, Favorite
-from ._helpers import current_user, login_required, get_json
+from ._helpers import current_user, login_required, get_json, clean_text
 
 bp = Blueprint("excursions", __name__)
 
@@ -114,11 +114,9 @@ def detail(slug):
 def add_comment(exc_id):
     e = Excursion.query.get_or_404(exc_id)
     data = get_json()
-    body = (data.get("body") or "").strip()
+    body = clean_text(data.get("body"))
     if not body:
         return jsonify(error="empty"), 400
-    if len(body) > 2000:
-        return jsonify(error="too_long"), 400
 
     u = current_user()
     c = Comment(target_type="excursion", target_id=e.id, user_id=u.id, body=body)

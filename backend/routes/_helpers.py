@@ -50,3 +50,23 @@ def log_action(op, table, message, user_id=None):
 def get_json():
     """Безопасно достаём JSON из запроса. Если его нет — возвращаем пустой dict."""
     return request.get_json(silent=True) or {}
+
+
+def clean_text(value, max_len=2000):
+    """
+    Приводим пользовательский текст в безопасный вид перед сохранением:
+    - режем по максимальной длине,
+    - убираем управляющие символы (кроме \n, \r, \t),
+    - тримим пробелы по краям.
+
+    HTML-теги не вычищаем — фронт всё равно вставляет через Fmt.esc(),
+    но защищаемся от попадания «мусора» в БД.
+    """
+    if value is None:
+        return None
+    s = str(value).strip()
+    if not s:
+        return s
+    # Удаляем управляющие символы
+    s = "".join(c for c in s if c == "\n" or c == "\r" or c == "\t" or ord(c) >= 32)
+    return s[:max_len]

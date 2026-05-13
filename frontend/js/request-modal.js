@@ -35,7 +35,8 @@ const RequestModal = (() => {
                 </div>
                 <div class="field">
                     <label class="field__label">Желаемая дата (необязательно)</label>
-                    <input class="field__input" name="desired_date" type="date">
+                    <input class="field__input" name="desired_date" type="date" min="${new Date().toISOString().slice(0,10)}">
+                    <div class="field__error" id="rm-err-desired_date"></div>
                 </div>
                 <div class="field">
                     <label class="field__label">Комментарий (необязательно)</label>
