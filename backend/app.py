@@ -24,7 +24,7 @@ def create_app():
     from models import (  # noqa: F401
         Country, Destination, Excursion,
         Article, ArticleCategory,
-        User, Comment, Favorite, ConsultRequest, AuditLog,
+        User, Comment, Favorite, ConsultRequest, AuditLog, Booking,
     )
 
     # Регистрация Blueprint'ов
@@ -34,6 +34,7 @@ def create_app():
     from routes.articles     import bp as art_bp
     from routes.favorites    import bp as fav_bp
     from routes.requests_    import bp as req_bp
+    from routes.bookings     import bp as book_bp
     from routes.admin        import bp as admin_bp
     from routes.misc         import bp as misc_bp
 
@@ -43,6 +44,7 @@ def create_app():
     app.register_blueprint(art_bp,   url_prefix="/api/articles")
     app.register_blueprint(fav_bp,   url_prefix="/api/favorites")
     app.register_blueprint(req_bp,   url_prefix="/api/requests")
+    app.register_blueprint(book_bp,  url_prefix="/api/bookings")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
     app.register_blueprint(misc_bp,  url_prefix="/api")
 
@@ -98,9 +100,39 @@ def create_app():
     def page_contacts():
         return send_from_directory(FRONTEND_DIR, "contacts.html")
 
+    @app.route("/booking/<int:booking_id>")
+    def page_booking(booking_id):
+        return send_from_directory(FRONTEND_DIR, "booking.html")
+
     @app.route("/<path:filename>")
     def static_files(filename):
         return send_from_directory(FRONTEND_DIR, filename)
+
+    # ---------- Security headers ----------
+    # Базовый набор — снижает поверхность атаки в браузере.
+    @app.after_request
+    def _add_security_headers(resp):
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("X-Frame-Options", "DENY")
+        resp.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        resp.headers.setdefault(
+            "Permissions-Policy",
+            "geolocation=(), microphone=(), camera=()",
+        )
+        # CSP — разрешаем встроенные стили/скрипты (т.к. inline JS используется
+        # в HTML; ужесточить можно после рефактора в внешние bundle-ы).
+        # Картинки: свой origin + picsum (cdn) + data URIs.
+        resp.headers.setdefault(
+            "Content-Security-Policy",
+            "default-src 'self'; "
+            "img-src 'self' https://picsum.photos https://fastly.picsum.photos data:; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; "
+            "script-src 'self' 'unsafe-inline'; "
+            "connect-src 'self'; "
+            "frame-ancestors 'none'"
+        )
+        return resp
 
     # ---------- Обработчики ошибок ----------
     @app.errorhandler(404)
@@ -111,6 +143,13 @@ def create_app():
     def server_error(e):
         app.logger.exception(e)
         return jsonify(error="server_error"), 500
+
+    # Предупреждение, если SECRET_KEY оставлен дефолтным — чтобы не задеплоить с ним
+    if "dev-secret" in app.config.get("SECRET_KEY", "") or "change-me" in app.config.get("SECRET_KEY", ""):
+        app.logger.warning(
+            "SECRET_KEY имеет дефолтное значение — обязательно задать через env "
+            "переменную SECRET_KEY перед публикацией"
+        )
 
     return app
 

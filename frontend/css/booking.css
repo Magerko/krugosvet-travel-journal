@@ -1,0 +1,53 @@
+/* Страница брони. */
+
+.booking-page {
+    padding: 28px var(--page-padding) 64px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.booking-inner h1 {
+    font-size: 36px;
+    letter-spacing: -0.8px;
+    margin: 6px 0 24px;
+}
+
+.booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+}
+
+.bm-summary__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+}
+.bm-summary__total,
+.booking-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+}
+.booking-total b {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Модалка бронирования: общая summary внутри */
+.bm-summary {
+    background: var(--bg-soft);
+    padding: 14px;
+    border-radius: var(--radius-md);
+    margin: 14px 0;
+}
+
+@media (max-width: 1000px) {
+    .booking-grid { grid-template-columns: 1fr; }
+}

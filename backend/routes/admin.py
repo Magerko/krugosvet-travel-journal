@@ -12,7 +12,7 @@ from sqlalchemy import func
 from extensions import db
 from models import (
     Article, ArticleCategory, Excursion, Destination, Country,
-    Comment, ConsultRequest, AuditLog, User,
+    Comment, ConsultRequest, AuditLog, User, Booking,
 )
 from ._helpers import admin_required, get_json, log_action, current_user
 
@@ -33,7 +33,38 @@ def stats():
         requests_new=ConsultRequest.query.filter_by(status="new").count(),
         requests_total=ConsultRequest.query.count(),
         comments_pending=Comment.query.filter_by(is_approved=False).count(),
+        bookings_pending=Booking.query.filter_by(status="pending").count(),
+        bookings_total=Booking.query.count(),
     )
+
+
+# -------------------------------------------------- BOOKINGS --
+
+@bp.get("/bookings")
+@admin_required
+def admin_bookings():
+    status = request.args.get("status")
+    q = Booking.query
+    if status and status in ("pending", "paid", "completed", "cancelled"):
+        q = q.filter_by(status=status)
+    items = q.order_by(Booking.created_at.desc()).limit(200).all()
+    return jsonify(items=[b.to_dict() for b in items])
+
+
+@bp.put("/bookings/<int:bid>")
+@admin_required
+def update_booking(bid):
+    b = Booking.query.get_or_404(bid)
+    d = get_json()
+    new_status = d.get("status")
+    if new_status not in ("pending", "paid", "completed", "cancelled"):
+        return jsonify(error="bad_status"), 400
+    old = b.status
+    b.status = new_status
+    log_action("UPDATE", "bookings", f"{b.code} {old} → {new_status}",
+               user_id=current_user().id)
+    db.session.commit()
+    return jsonify(booking=b.to_dict())
 
 
 @bp.get("/audit")

@@ -5,9 +5,11 @@
     await Layout.mount({ active: '' });
 
     const params = new URLSearchParams(location.search);
-    const next = params.get('next') || '/cabinet';
+    // next должен быть относительным путём — иначе подменим на /cabinet,
+    // чтобы исключить open redirect на внешний сайт через ссылку /auth?next=...
+    const rawNext = params.get('next') || '/cabinet';
+    const next = (rawNext.startsWith('/') && !rawNext.startsWith('//')) ? rawNext : '/cabinet';
 
-    // Если уже залогинен — сразу редиректим
     if (Layout.user) {
         location.href = next;
         return;
@@ -25,44 +27,62 @@
 
     let mode = params.get('mode') === 'register' ? 'register' : 'login';
 
-    function applyMode() {
-        document.querySelectorAll('.auth-tab').forEach(t =>
-            t.classList.toggle('is-active', t.dataset.mode === mode));
+    function applyMode(animate = false) {
+        const form = document.getElementById('auth-form');
 
-        const isReg = mode === 'register';
+        function paint() {
+            document.querySelectorAll('.auth-tab').forEach(t =>
+                t.classList.toggle('is-active', t.dataset.mode === mode));
 
-        // Заголовки
-        document.getElementById('form-title').textContent = isReg ? 'Создайте аккаунт' : 'С возвращением';
-        document.getElementById('form-desc').textContent  = isReg
-            ? 'Регистрация занимает минуту.'
-            : 'Войдите по email и паролю.';
-        document.getElementById('poster-title').textContent = isReg
-            ? 'Один аккаунт — все ваши поездки, скидки и любимые отели в одном месте.'
-            : 'Войдите в личный кабинет — ваши брони, скидки и любимые отели уже ждут.';
+            const isReg = mode === 'register';
 
-        // Видимость полей
-        document.getElementById('field-name').style.display  = isReg ? '' : 'none';
-        document.getElementById('field-phone').style.display = isReg ? '' : 'none';
-        document.getElementById('row-remember').style.display = isReg ? 'none' : '';
+            document.getElementById('form-title').textContent = isReg ? 'Создайте аккаунт' : 'С возвращением';
+            document.getElementById('form-desc').textContent  = isReg
+                ? 'Регистрация занимает минуту.'
+                : 'Войдите по email и паролю.';
+            document.getElementById('poster-title').textContent = isReg
+                ? 'Один аккаунт — все ваши поездки, скидки и любимые отели в одном месте.'
+                : 'Войдите в личный кабинет — ваши брони, скидки и любимые отели уже ждут.';
 
-        document.getElementById('submit-btn').textContent = isReg ? 'Создать аккаунт' : 'Войти';
+            // Поля имени/телефона: data-hidden управляет CSS-анимацией max-height
+            document.getElementById('field-name').dataset.hidden  = isReg ? 'false' : 'true';
+            document.getElementById('field-phone').dataset.hidden = isReg ? 'false' : 'true';
+            document.getElementById('row-remember').style.display = isReg ? 'none' : '';
 
-        document.getElementById('auth-foot').innerHTML = isReg
-            ? `Уже есть аккаунт? <button data-switch="login">Войти →</button>`
-            : `Нет аккаунта? <button data-switch="register">Зарегистрироваться →</button>`;
+            document.getElementById('submit-btn').textContent = isReg ? 'Создать аккаунт' : 'Войти';
 
-        document.querySelectorAll('[data-switch]').forEach(b =>
-            b.addEventListener('click', () => { mode = b.dataset.switch; applyMode(); }));
+            document.getElementById('auth-foot').innerHTML = isReg
+                ? `Уже есть аккаунт? <button data-switch="login">Войти →</button>`
+                : `Нет аккаунта? <button data-switch="register">Зарегистрироваться →</button>`;
 
-        // Очищаем ошибки при переключении
-        ['email', 'password', 'full_name'].forEach(f => {
-            const el = document.getElementById('err-' + f);
-            if (el) el.textContent = '';
-        });
+            document.querySelectorAll('[data-switch]').forEach(b =>
+                b.addEventListener('click', () => switchMode(b.dataset.switch)));
+
+            ['email', 'password', 'full_name'].forEach(f => {
+                const el = document.getElementById('err-' + f);
+                if (el) el.textContent = '';
+            });
+        }
+
+        if (animate && form) {
+            form.classList.add('is-switching');
+            setTimeout(() => {
+                paint();
+                form.classList.remove('is-switching');
+            }, 180);
+        } else {
+            paint();
+        }
+    }
+
+    function switchMode(next) {
+        if (next === mode) return;
+        mode = next;
+        applyMode(true);
     }
 
     document.querySelectorAll('.auth-tab').forEach(t =>
-        t.addEventListener('click', () => { mode = t.dataset.mode; applyMode(); }));
+        t.addEventListener('click', () => switchMode(t.dataset.mode)));
 
     applyMode();
 

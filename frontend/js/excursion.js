@@ -79,7 +79,14 @@
         </div>
     `).join('');
 
-    // Кнопка заявки
+    // Кнопки: бронь (главная) и заявка (вторичная)
+    document.getElementById('book-btn').addEventListener('click', () => {
+        if (!user) {
+            location.href = '/auth?next=' + encodeURIComponent(location.pathname);
+            return;
+        }
+        BookingModal.open(e);
+    });
     document.getElementById('apply-btn').addEventListener('click', () => {
         RequestModal.open({ excursion: e });
     });
@@ -125,13 +132,13 @@
         }
         el.innerHTML = items.map(c => `
             <div class="comment">
-                <div class="comment__avatar">${c.user_initials}</div>
+                <div class="comment__avatar">${Fmt.esc(c.user_initials)}</div>
                 <div>
                     <div class="comment__head">
-                        <span class="comment__name">${c.user_name}</span>
+                        <span class="comment__name">${Fmt.esc(c.user_name)}</span>
                         <span class="comment__date">${Fmt.dateShort(c.created_at)}</span>
                     </div>
-                    <div class="comment__body">${c.body}</div>
+                    <div class="comment__body">${Fmt.esc(c.body)}</div>
                 </div>
             </div>
         `).join('');

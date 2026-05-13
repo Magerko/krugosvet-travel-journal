@@ -7,17 +7,15 @@
         return;
     }
 
-    // Шапка пользователя
     document.getElementById('user-avatar').textContent = user.initials;
     document.getElementById('user-name').textContent = user.full_name;
     document.getElementById('user-email').textContent = user.email;
 
-    // Иконки в навигации
+    document.getElementById('nav-book-ic').innerHTML = Icons.compass(15);
     document.getElementById('nav-fav-ic').innerHTML  = Icons.heart(15);
     document.getElementById('nav-req-ic').innerHTML  = Icons.calendar(15);
     document.getElementById('nav-prof-ic').innerHTML = Icons.users(15);
 
-    // Профиль
     document.getElementById('p-name').value  = user.full_name;
     document.getElementById('p-email').value = user.email;
     document.getElementById('p-phone').value = user.phone || '—';
@@ -28,11 +26,71 @@
             document.querySelectorAll('.cab-nav__item').forEach(x =>
                 x.classList.toggle('is-active', x === it));
             const s = it.dataset.section;
+            document.getElementById('section-bookings').style.display  = s === 'bookings'  ? '' : 'none';
             document.getElementById('section-favorites').style.display = s === 'favorites' ? '' : 'none';
             document.getElementById('section-requests').style.display  = s === 'requests'  ? '' : 'none';
             document.getElementById('section-profile').style.display   = s === 'profile'   ? '' : 'none';
         });
     });
+
+    // ----- Брони -----
+    let bks = { upcoming: [], history: [] };
+    try {
+        bks = await API.get('/api/bookings/my');
+    } catch (_) {}
+
+    document.getElementById('cnt-book').textContent = bks.upcoming.length + bks.history.length;
+    document.getElementById('cnt-upcoming').textContent = '· ' + bks.upcoming.length;
+    document.getElementById('cnt-history').textContent  = '· ' + bks.history.length;
+
+    function renderBookings(list, el, emptyMsg) {
+        if (!list.length) {
+            el.innerHTML = `<div class="empty-block">${emptyMsg}</div>`;
+            return;
+        }
+        const STATUS_BADGE = {
+            pending:   'badge--warn',
+            paid:      'badge--ok',
+            completed: 'badge--accent',
+            cancelled: 'badge--mute',
+        };
+        el.innerHTML = list.map(b => {
+            const exc = b.excursion || {};
+            const place = exc.destination
+                ? (exc.destination.country + (exc.destination.city ? ', ' + exc.destination.city : ''))
+                : '—';
+            return `
+                <a class="booking-row" href="/booking/${b.id}">
+                    <div class="booking-row__photo">
+                        ${Img.tag('exc-' + exc.slug, exc.title || '', 200, 200)}
+                    </div>
+                    <div>
+                        <div class="mono muted" style="font-size:11px;">${b.code} · ${Fmt.dateShort(b.created_at)}</div>
+                        <div class="serif" style="font-weight:700;font-size:17px;margin-top:4px;">${exc.title || '—'}</div>
+                        <div class="muted" style="font-size:12px;margin-top:4px;">
+                            ${place} · ${b.tourists} ${Fmt.plural(b.tourists, ['чел.','чел.','чел.'])} · ${Fmt.date(b.departure_date)}
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="serif" style="font-weight:700;font-size:18px;">${Fmt.money(b.total_price)}</div>
+                        <span class="badge ${STATUS_BADGE[b.status] || 'badge--mute'}" style="margin-top:6px;">● ${b.status_label}</span>
+                    </div>
+                </a>
+            `;
+        }).join('');
+    }
+    renderBookings(bks.upcoming, document.getElementById('bks-upcoming'),
+        'Предстоящих броней нет. <a href="/excursions" class="arrow-link">Выбрать экскурсию →</a>');
+    renderBookings(bks.history,  document.getElementById('bks-history'),
+        'История пуста.');
+
+    document.querySelectorAll('.bookings-tabs .tab').forEach(t =>
+        t.addEventListener('click', () => {
+            document.querySelectorAll('.bookings-tabs .tab').forEach(x => x.classList.toggle('is-active', x === t));
+            const k = t.dataset.bks;
+            document.getElementById('bks-upcoming').style.display = k === 'upcoming' ? '' : 'none';
+            document.getElementById('bks-history').style.display  = k === 'history'  ? '' : 'none';
+        }));
 
     // ----- Избранное -----
     let favData = { articles: [], excursions: [], destinations: [] };
@@ -147,7 +205,7 @@
                     <div class="req-card__sub">
                         №${r.id} · отправлена ${Fmt.dateTime(r.created_at)}${r.desired_date ? ' · желаемая дата ' + Fmt.dateShort(r.desired_date) : ''}
                     </div>
-                    ${r.message ? `<div class="req-card__msg">${r.message}</div>` : ''}
+                    ${r.message ? `<div class="req-card__msg">${Fmt.esc(r.message)}</div>` : ''}
                 </div>
                 <div style="text-align: right;">
                     <span class="badge ${STATUS_BADGE[r.status] || 'badge--mute'}">● ${r.status_label}</span>

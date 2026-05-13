@@ -1,6 +1,17 @@
 /* Утилиты форматирования. Кладу всё в один файл, чтобы не плодить мелочёвку. */
 
 const Fmt = {
+    // Эскейп пользовательского текста перед вставкой через innerHTML.
+    // Используем везде, где данные приходят от других пользователей.
+    esc(s) {
+        return String(s ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    },
+
     // 1240 → "$1,240"
     money(value) {
         if (value === null || value === undefined) return '—';

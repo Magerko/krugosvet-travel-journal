@@ -18,7 +18,7 @@ from extensions import db
 from models import (
     Country, Destination, Excursion,
     Article, ArticleCategory,
-    User, Comment, Favorite, ConsultRequest, AuditLog,
+    User, Comment, Favorite, ConsultRequest, AuditLog, Booking,
 )
 
 
@@ -278,6 +278,22 @@ def _seed_users_and_demo():
         Favorite(user_id=user.id, target_type="destination", target_id=2),
         Favorite(user_id=user2.id, target_type="article",    target_id=2),
         Favorite(user_id=user2.id, target_type="excursion",  target_id=5),
+    ])
+
+    # Пара демо-броней
+    db.session.add_all([
+        Booking(
+            code="B-1284", user_id=user.id, excursion_id=1,
+            tourists=2, departure_date=date(2026, 6, 14),
+            contact_phone=user.phone, contact_email=user.email,
+            base_price=440, discount=0, total_price=440, status="paid",
+        ),
+        Booking(
+            code="B-1305", user_id=user.id, excursion_id=5,
+            tourists=2, departure_date=date(2026, 7, 10),
+            contact_phone=user.phone, contact_email=user.email,
+            base_price=2200, discount=110, total_price=2090, status="pending",
+        ),
     ])
 
     db.session.add_all([

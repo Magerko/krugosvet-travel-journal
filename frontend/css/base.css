@@ -112,3 +112,28 @@ p { margin: 0; }
     .page { padding: 0 18px; }
     :root { --page-padding: 18px; }
 }
+
+/* ------------------------------------------------------------------
+   Анимация перехода между страницами:
+   - на загрузке main плавно поднимается и появляется
+   - при клике по внутренней ссылке main «уходит» наверх с fade-out
+     (см. js/transitions.js)
+   ------------------------------------------------------------------ */
+main {
+    animation: page-enter .35s cubic-bezier(.2,.6,.2,1) both;
+}
+@keyframes page-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+body.is-leaving main {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .22s ease, transform .22s ease;
+}
+
+/* Если пользователь предпочитает «без движения» — отключаем */
+@media (prefers-reduced-motion: reduce) {
+    main, body.is-leaving main { animation: none !important; transition: none !important; transform: none !important; }
+}

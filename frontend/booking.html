@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронь — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <script src="/js/transitions.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/booking.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="booking-page">
+    <div class="booking-inner">
+        <div class="breadcrumbs" id="breadcrumbs">…</div>
+        <h1 id="booking-title">Бронь</h1>
+
+        <div class="booking-grid">
+            <section class="booking-body">
+                <div class="card card--pad">
+                    <h3 style="font-size:18px;margin-bottom:14px;">Детали поездки</h3>
+                    <div id="booking-rows"></div>
+                </div>
+
+                <div class="card card--pad" style="margin-top:16px;">
+                    <h3 style="font-size:18px;margin-bottom:14px;">Контактные данные</h3>
+                    <div id="contact-rows"></div>
+                </div>
+
+                <div class="card card--pad" style="margin-top:16px;" id="payment-card">
+                    <h3 style="font-size:18px;margin-bottom:10px;">Оплата</h3>
+                    <p class="muted" style="font-size:13px;margin-bottom:12px;">
+                        Имитация оплаты — для демонстрации работы системы бронирования.
+                    </p>
+                    <button class="btn btn--primary btn--lg" id="pay-btn">Оплатить</button>
+                    <button class="btn btn--ghost" id="cancel-btn" style="margin-left:8px;">Отменить бронь</button>
+                </div>
+            </section>
+
+            <aside class="booking-aside">
+                <div class="aside-card">
+                    <div id="b-img" style="margin: -22px -22px 16px;"></div>
+                    <h3 style="font-size:18px;margin-bottom:6px;" id="b-exc-title">…</h3>
+                    <div class="muted" style="font-size:13px;" id="b-exc-meta"></div>
+
+                    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line);">
+                        <div id="b-summary"></div>
+                        <div class="booking-total">
+                            <span>К оплате</span>
+                            <b id="b-total">…</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aside-card" style="margin-top:14px;">
+                    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px;">статус</div>
+                    <div id="b-status"></div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/booking.js"></script>
+
+</body>
+</html>

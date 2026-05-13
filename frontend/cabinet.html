@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет — Кругосвет</title>
     <script src="/js/theme.js"></script>
+    <script src="/js/transitions.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,7 +32,12 @@
             </div>
 
             <div class="cab-nav">
-                <div class="cab-nav__item is-active" data-section="favorites">
+                <div class="cab-nav__item is-active" data-section="bookings">
+                    <span id="nav-book-ic"></span>
+                    <span>Мои брони</span>
+                    <span class="cab-nav__item__count" id="cnt-book">—</span>
+                </div>
+                <div class="cab-nav__item" data-section="favorites">
                     <span id="nav-fav-ic"></span>
                     <span>Избранное</span>
                     <span class="cab-nav__item__count" id="cnt-fav">—</span>
@@ -49,8 +55,21 @@
         </aside>
 
         <section class="cab-main">
+            <!-- Брони (по умолчанию) -->
+            <div id="section-bookings">
+                <div class="cab-main__head">
+                    <h1>Мои брони</h1>
+                </div>
+                <div class="bookings-tabs">
+                    <button class="tab is-active" data-bks="upcoming">Предстоящие <span id="cnt-upcoming" class="muted mono" style="font-size:11px;"></span></button>
+                    <button class="tab" data-bks="history">История <span id="cnt-history" class="muted mono" style="font-size:11px;"></span></button>
+                </div>
+                <div id="bks-upcoming"></div>
+                <div id="bks-history" style="display:none;"></div>
+            </div>
+
             <!-- Избранное -->
-            <div id="section-favorites">
+            <div id="section-favorites" style="display:none;">
                 <div class="cab-main__head">
                     <h1>Избранное</h1>
                 </div>
@@ -113,7 +132,7 @@
                     </div>
                     <p class="muted" style="font-size: 12px; margin-top: 12px;">
                         Редактирование профиля в этой версии портала не реализовано.
-                        Чтобы изменить контактные данные — напишите на info@krugosvet.ru.
+                        Чтобы изменить контактные данные — напишите на hello@krugosvet.travel.
                     </p>
                 </div>
             </div>

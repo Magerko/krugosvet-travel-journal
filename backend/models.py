@@ -258,6 +258,65 @@ class Favorite(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
+class Booking(db.Model):
+    """Бронь экскурсии. Полноценный заказ с датой и оплатой (mock)."""
+    __tablename__ = "bookings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.String(16), nullable=False, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    excursion_id = db.Column(db.Integer, db.ForeignKey("excursions.id"), nullable=False)
+    tourists = db.Column(db.Integer, default=1, nullable=False)
+    departure_date = db.Column(db.Date, nullable=False)
+    contact_phone = db.Column(db.String(40))
+    contact_email = db.Column(db.String(120))
+    base_price = db.Column(db.Integer, nullable=False)
+    discount = db.Column(db.Integer, default=0)
+    total_price = db.Column(db.Integer, nullable=False)
+    status = db.Column(
+        db.Enum("pending", "paid", "completed", "cancelled"),
+        default="pending", nullable=False,
+    )
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship("User")
+    excursion = db.relationship("Excursion")
+
+    STATUS_LABELS = {
+        "pending":   "ожидает оплаты",
+        "paid":      "оплачено",
+        "completed": "поездка завершена",
+        "cancelled": "отменено",
+    }
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "code": self.code,
+            "tourists": self.tourists,
+            "departure_date": self.departure_date.isoformat() if self.departure_date else None,
+            "contact_phone": self.contact_phone,
+            "contact_email": self.contact_email,
+            "base_price": self.base_price,
+            "discount": self.discount,
+            "total_price": self.total_price,
+            "status": self.status,
+            "status_label": self.STATUS_LABELS.get(self.status, self.status),
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "excursion": {
+                "id": self.excursion.id,
+                "title": self.excursion.title,
+                "slug": self.excursion.slug,
+                "duration": self.excursion.duration,
+                "cover_label": self.excursion.cover_label,
+                "destination": {
+                    "country": self.excursion.destination.country.name if self.excursion.destination and self.excursion.destination.country else None,
+                    "city": self.excursion.destination.city if self.excursion.destination else None,
+                } if self.excursion.destination else None,
+            } if self.excursion else None,
+        }
+
+
 class ConsultRequest(db.Model):
     __tablename__ = "consult_requests"
 

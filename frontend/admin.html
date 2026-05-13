@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админка — Кругосвет</title>
     <script src="/js/theme.js"></script>
+    <script src="/js/transitions.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -39,6 +40,11 @@
                     <span id="ic-dest"></span>
                     <span>Места</span>
                     <span class="admin-nav__count" id="cnt-destinations">—</span>
+                </div>
+                <div class="admin-nav__item" data-section="bookings">
+                    <span id="ic-book"></span>
+                    <span>Брони</span>
+                    <span class="admin-nav__count" id="cnt-bookings">—</span>
                 </div>
                 <div class="admin-nav__item" data-section="requests">
                     <span id="ic-req"></span>
@@ -159,6 +165,39 @@
                     <div class="sql-foot">
                         <code>SELECT * FROM destinations ORDER BY title</code>
                     </div>
+                </div>
+            </div>
+
+            <!-- ============== БРОНИ ============== -->
+            <div id="section-bookings" style="display:none;">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">bookings</div>
+                        <h1>Брони экскурсий</h1>
+                    </div>
+                </div>
+
+                <div class="admin-toolbar">
+                    <span class="tag-pill is-active" data-bstatus="">Все</span>
+                    <span class="tag-pill" data-bstatus="pending">Ожидают оплаты</span>
+                    <span class="tag-pill" data-bstatus="paid">Оплачены</span>
+                    <span class="tag-pill" data-bstatus="completed">Завершены</span>
+                    <span class="tag-pill" data-bstatus="cancelled">Отменены</span>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:80px;">Код</th>
+                                <th style="width:110px;">Дата</th>
+                                <th>Экскурсия</th>
+                                <th style="width:80px;">Туристов</th>
+                                <th style="width:100px;">Сумма</th>
+                                <th style="width:140px;">Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="book-tbody"></tbody>
+                    </table>
                 </div>
             </div>
 

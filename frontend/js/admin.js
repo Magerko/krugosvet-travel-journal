@@ -11,6 +11,7 @@
     document.getElementById('ic-art').innerHTML  = Icons.calendar(15);
     document.getElementById('ic-exc').innerHTML  = Icons.compass(15);
     document.getElementById('ic-dest').innerHTML = Icons.pin(15);
+    document.getElementById('ic-book').innerHTML = Icons.wallet(15);
     document.getElementById('ic-req').innerHTML  = Icons.users(15);
     document.getElementById('ic-com').innerHTML  = Icons.search(15);
 
@@ -25,14 +26,15 @@
         document.getElementById('cnt-articles').textContent     = s.articles;
         document.getElementById('cnt-excursions').textContent   = s.excursions;
         document.getElementById('cnt-destinations').textContent = s.destinations;
+        document.getElementById('cnt-bookings').textContent     = s.bookings_total;
         document.getElementById('cnt-requests').textContent     = s.requests_total;
         document.getElementById('cnt-comments').textContent     = s.comments_pending;
 
         document.getElementById('kpis').innerHTML = [
             ['Опубликованных статей', s.articles_published, `всего ${s.articles}`],
             ['Экскурсий и пакетов',   s.excursions,         '—'],
+            ['Броней ожидают оплаты', s.bookings_pending,   `всего ${s.bookings_total}`],
             ['Новых заявок',          s.requests_new,       `всего ${s.requests_total}`],
-            ['Комментариев на модерации', s.comments_pending, '—'],
         ].map(([l, n, sub]) => `
             <div class="admin-kpi">
                 <div class="admin-kpi__num">${n}</div>
@@ -63,7 +65,7 @@
         it.addEventListener('click', () => {
             document.querySelectorAll('.admin-nav__item').forEach(x => x.classList.toggle('is-active', x === it));
             const s = it.dataset.section;
-            ['articles','excursions','destinations','requests','comments'].forEach(k =>
+            ['articles','excursions','destinations','bookings','requests','comments'].forEach(k =>
                 document.getElementById('section-' + k).style.display = k === s ? '' : 'none');
         }));
 
@@ -413,6 +415,58 @@
         } catch (_) {}
     }
 
+    // =================== БРОНИ ===================
+    let bookStatus = '';
+    async function loadBookings() {
+        try {
+            const url = '/api/admin/bookings' + (bookStatus ? `?status=${bookStatus}` : '');
+            const r = await API.get(url);
+            renderBookingsTable(r.items);
+        } catch (_) {}
+    }
+    function renderBookingsTable(items) {
+        const tbody = document.getElementById('book-tbody');
+        if (!items.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="muted" style="padding:24px;text-align:center;">Броней нет</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = items.map(b => `
+            <tr>
+                <td class="mono muted">${b.code}</td>
+                <td class="mono muted">${Fmt.dateShort(b.departure_date)}</td>
+                <td>
+                    <div style="font-family:var(--font-serif);font-weight:700;font-size:13px;">${b.excursion?.title || '—'}</div>
+                    <div class="muted" style="font-size:11px;">${b.contact_email}</div>
+                </td>
+                <td class="mono">${b.tourists}</td>
+                <td class="mono">${Fmt.money(b.total_price)}</td>
+                <td>
+                    <select class="field__select js-bstatus" data-id="${b.id}" style="padding:5px 8px;font-size:12px;">
+                        <option value="pending"   ${b.status === 'pending'   ? 'selected' : ''}>ожидает</option>
+                        <option value="paid"      ${b.status === 'paid'      ? 'selected' : ''}>оплачено</option>
+                        <option value="completed" ${b.status === 'completed' ? 'selected' : ''}>завершено</option>
+                        <option value="cancelled" ${b.status === 'cancelled' ? 'selected' : ''}>отменено</option>
+                    </select>
+                </td>
+            </tr>`).join('');
+
+        tbody.querySelectorAll('.js-bstatus').forEach(sel =>
+            sel.addEventListener('change', async e => {
+                try {
+                    await API.put('/api/admin/bookings/' + e.target.dataset.id, { status: e.target.value });
+                    toast('Статус обновлён', 'ok');
+                    await loadStats();
+                } catch (_) { toast('Ошибка', 'err'); }
+            }));
+    }
+    document.querySelectorAll('#section-bookings .tag-pill').forEach(p =>
+        p.addEventListener('click', () => {
+            bookStatus = p.dataset.bstatus;
+            document.querySelectorAll('#section-bookings .tag-pill').forEach(x =>
+                x.classList.toggle('is-active', x === p));
+            loadBookings();
+        }));
+
     // =================== ЗАЯВКИ ===================
     let reqStatus = '';
     async function loadRequests() {
@@ -483,7 +537,7 @@
                 <td class="mono muted">${c.id}</td>
                 <td class="mono muted">${c.target_type} #${c.target_id}</td>
                 <td>${c.user_name}</td>
-                <td style="max-width: 360px; overflow: hidden; text-overflow: ellipsis;">${c.body}</td>
+                <td style="max-width: 360px; overflow: hidden; text-overflow: ellipsis;">${Fmt.esc(c.body)}</td>
                 <td>${c.is_approved
                     ? '<span class="badge badge--ok">опубл.</span>'
                     : '<span class="badge badge--warn">скрыт</span>'}</td>
@@ -521,6 +575,7 @@
         loadArticles(),
         loadExcursions(),
         loadDestinations(),
+        loadBookings(),
         loadRequests(),
         loadComments(),
     ]);
