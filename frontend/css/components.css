@@ -240,6 +240,10 @@
 }
 .site-nav--mobile a {
     padding: 14px 22px;
+    /* Сбрасываем desktop-наследие: padding-bottom + margin-bottom -22px
+       нужны для подчёркивания активного пункта в горизонтальном меню.
+       На мобиле без сброса каждый пункт наезжает сверху на следующий. */
+    margin: 0;
     font-family: var(--font-serif);
     font-size: 19px;
     color: var(--ink);
