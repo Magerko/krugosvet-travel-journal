@@ -70,6 +70,11 @@ const Layout = (() => {
                             Независимое издание о&nbsp;путешествиях. Новости индустрии, гиды
                             по&nbsp;странам и&nbsp;подборки экскурсий — без проплаченных рекомендаций.
                         </div>
+                        <div class="site-footer__socials">
+                            <a href="#" aria-label="Telegram">${Icons.telegram(18)}</a>
+                            <a href="#" aria-label="Instagram">${Icons.instagram(18)}</a>
+                            <a href="#" aria-label="RSS">${Icons.rss(18)}</a>
+                        </div>
                     </div>
                     <div>
                         <h4>Компания</h4>

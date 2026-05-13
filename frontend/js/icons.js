@@ -92,6 +92,39 @@ const Icons = {
              fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
             <path d="M12 21C9 18 3 14 4 9c0.5-2.8 3-4.4 5.4-3.6C11 6 12 7.4 12 9c0-1.6 1-3 2.6-3.6C17 4.6 19.5 6.2 20 9c1 5-5 9-8 12z"/>
         </svg>`,
+
+    // --- Соцсети ---
+
+    // Telegram — узнаваемый «бумажный самолётик» в круге
+    telegram: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5.4 7.6-1.8 8.6c-.14.6-.5.74-1 .46l-2.8-2.06-1.34 1.3c-.16.16-.28.28-.56.28l.2-2.86 5.2-4.7c.22-.2-.05-.32-.36-.12L8.5 13l-2.78-.86c-.6-.2-.62-.6.13-.9l10.86-4.2c.5-.18.94.12.78.86z"/>
+        </svg>`,
+
+    // Google — фирменная буква G в их цветах, без надписей. Узнаваемая, но не копирует логотип целиком.
+    google: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.5 12.28c0-.85-.07-1.65-.2-2.42H12v4.58h6.45c-.28 1.5-1.13 2.78-2.4 3.63v3.02h3.88c2.27-2.1 3.57-5.18 3.57-8.81z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.92l-3.88-3.02c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.76-2.1-6.7-4.94H1.3v3.1A11.99 11.99 0 0 0 12 24z"/>
+            <path fill="#FBBC05" d="M5.3 14.28A7.2 7.2 0 0 1 4.92 12c0-.8.14-1.56.38-2.28V6.62H1.3A12 12 0 0 0 0 12c0 1.94.46 3.78 1.3 5.38l4-3.1z"/>
+            <path fill="#EA4335" d="M12 4.78c1.76 0 3.34.6 4.6 1.8l3.43-3.42C17.95 1.18 15.24 0 12 0A11.99 11.99 0 0 0 1.3 6.62l4 3.1C6.24 6.88 8.88 4.78 12 4.78z"/>
+        </svg>`,
+
+    // Instagram — квадрат со скруглением, круг внутри и точка-объектив
+    instagram: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>`,
+
+    // RSS — три дуги волн + точка
+    rss: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M5 5c8.3 0 14 5.7 14 14"/>
+            <path d="M5 11c4.4 0 8 3.6 8 8"/>
+            <circle cx="6" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>`,
 };
 
 window.Icons = Icons;

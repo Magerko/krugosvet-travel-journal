@@ -13,6 +13,16 @@
         return;
     }
 
+    // Подставляем SVG-иконки в SSO-кнопки
+    document.getElementById('sso-tg-ic').innerHTML     = Icons.telegram(18);
+    document.getElementById('sso-google-ic').innerHTML = Icons.google(18);
+
+    // SSO пока не подключён — показываем тост
+    document.getElementById('sso-telegram').addEventListener('click', () =>
+        toast('Вход через Telegram скоро будет доступен', ''));
+    document.getElementById('sso-google').addEventListener('click', () =>
+        toast('Вход через Google скоро будет доступен', ''));
+
     let mode = params.get('mode') === 'register' ? 'register' : 'login';
 
     function applyMode() {

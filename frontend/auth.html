@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход — Кругосвет</title>
     <script src="/js/theme.js"></script>
@@ -92,9 +93,15 @@
 
             <div class="auth-divider">или через</div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <button type="button" class="btn btn--ghost">Telegram</button>
-                <button type="button" class="btn btn--ghost">VK ID</button>
+            <div class="auth-social">
+                <button type="button" class="btn btn--ghost" id="sso-telegram">
+                    <span class="auth-social__ic" id="sso-tg-ic"></span>
+                    <span>Telegram</span>
+                </button>
+                <button type="button" class="btn btn--ghost" id="sso-google">
+                    <span class="auth-social__ic" id="sso-google-ic"></span>
+                    <span>Google</span>
+                </button>
             </div>
 
             <div class="auth-foot" id="auth-foot"></div>

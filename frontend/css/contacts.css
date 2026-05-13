@@ -85,7 +85,9 @@
 }
 
 .socials__item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid var(--line);
     font-size: 14px;
@@ -94,6 +96,17 @@
 }
 .socials__item:last-child { border-bottom: none; }
 .socials__item:hover { color: var(--accent); }
+.socials__ic {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-soft);
+    color: var(--accent);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
 
 /* Карта */
 .contacts-map {

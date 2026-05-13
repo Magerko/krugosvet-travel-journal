@@ -153,6 +153,18 @@
     background: var(--line);
 }
 
+.auth-social {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.auth-social .btn { gap: 10px; padding: 12px 16px; }
+.auth-social__ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .auth-foot {
     margin-top: 28px;
     font-size: 13px;
