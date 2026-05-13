@@ -28,7 +28,9 @@
         document.getElementById('cnt-destinations').textContent = s.destinations;
         document.getElementById('cnt-bookings').textContent     = s.bookings_total;
         document.getElementById('cnt-requests').textContent     = s.requests_total;
-        document.getElementById('cnt-comments').textContent     = s.comments_pending;
+        // В бейдже сайдбара — общее число (как у остальных секций).
+        // Pending уходит в KPI наверху.
+        document.getElementById('cnt-comments').textContent     = s.comments_total;
 
         document.getElementById('kpis').innerHTML = [
             ['Опубликованных статей', s.articles_published, `всего ${s.articles}`],

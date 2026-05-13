@@ -32,6 +32,7 @@ def stats():
         users=User.query.count(),
         requests_new=ConsultRequest.query.filter_by(status="new").count(),
         requests_total=ConsultRequest.query.count(),
+        comments_total=Comment.query.count(),
         comments_pending=Comment.query.filter_by(is_approved=False).count(),
         bookings_pending=Booking.query.filter_by(status="pending").count(),
         bookings_total=Booking.query.count(),
