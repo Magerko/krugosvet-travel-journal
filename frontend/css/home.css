@@ -407,12 +407,23 @@
     /* hero__media получает overflow на случай, если тень/curve выходит за пределы */
     .hero__media { overflow: hidden; border-radius: var(--radius-md); }
     .hero-pick {
-        position: static;
-        margin: 16px 0 0;
-        width: 100%;
-        /* На десктопе card "перекрывает" фото — на мобиле он самостоятельный блок,
-           отдельная карточка с фоном и тенью лишена смысла, делаем плоской. */
-        box-shadow: none;
+        /* На мобиле hero-pick перестаёт быть «карточкой поверх фото».
+           Это просто заголовок статьи выпуска, текст без обёртки.
+           Иначе белый padding-фон создаёт визуальный «выступ» слева
+           относительно фото (фото с x=page_padding, текст с x=page_padding+22). */
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        top: auto !important;
+        margin: 20px 0 0 !important;
+        width: auto !important;
+        max-width: 100%;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
     }
     .quote-card { display: none; }
     .news-grid { grid-template-columns: 1fr; }

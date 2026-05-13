@@ -122,6 +122,17 @@ def create_app():
     def static_files(filename):
         return send_from_directory(FRONTEND_DIR, filename)
 
+    # ---------- Cache-Control для статики ----------
+    # CSS/JS меняются часто — пусть браузер всегда сверяется (no-cache даёт
+    # быстрый 304 при неизменном файле). Картинки можно кешировать.
+    @app.after_request
+    def _static_cache_control(resp):
+        path = (resp.headers.get("Content-Disposition") or "").lower()
+        ct = (resp.headers.get("Content-Type") or "").lower()
+        if any(t in ct for t in ("text/css", "javascript", "text/html")):
+            resp.headers["Cache-Control"] = "no-cache, must-revalidate"
+        return resp
+
     # ---------- Security headers ----------
     # Базовый набор — снижает поверхность атаки в браузере.
     @app.after_request
