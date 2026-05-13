@@ -29,7 +29,15 @@
     color: var(--ink-soft);
 }
 @media (max-width: 780px) {
+    .editorial-strip {
+        font-size: 12px;
+        padding: 8px var(--page-padding);
+        gap: 10px;
+        letter-spacing: 0.2px;
+    }
     .editorial-strip__motto { display: none; }
+    .editorial-strip__sep   { opacity: .4; }
+    .editorial-strip__date  { color: var(--ink-soft); }
 }
 
 /* ---------- Шапка ---------- */
@@ -472,8 +480,21 @@
 }
 
 @media (max-width: 780px) {
-    .site-header { padding: 14px 18px; }
+    .site-header {
+        padding: 12px 16px;
+        gap: 10px;
+    }
+    .brand { gap: 10px; }
+    .brand__mark { width: 32px; height: 32px; border-radius: 5px; }
+    .brand__name { font-size: 18px; }
+    .header-actions { gap: 8px; }
+    .theme-toggle, .hamburger { width: 34px; height: 34px; }
     .site-footer__grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+    /* На очень узких — subtitle уходит, чтобы дать брендингу больше воздуха */
+    .brand__sub { display: none; }
 }
 
 /* ---------- Иконки ---------- */

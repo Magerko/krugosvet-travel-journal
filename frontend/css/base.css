@@ -21,6 +21,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     /* плавный переход при смене темы — но только для цвета и фона, чтоб не лагало */
     transition: background-color .25s ease, color .25s ease;
+    /* На мобильных некоторые декоративные элементы (тени, повёрнутые карточки)
+       могут чуть выходить за viewport — гасим горизонтальный скролл. */
+    overflow-x: hidden;
 }
 
 img { max-width: 100%; display: block; }
