@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Место — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/listing.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="detail-page">
+    <div class="breadcrumbs" id="breadcrumbs">Главная / Места / …</div>
+
+    <div class="detail-grid">
+        <div>
+            <div class="gallery" id="gallery"></div>
+
+            <div class="detail-title">
+                <h1 id="title">…</h1>
+                <div class="detail-meta-line" id="meta-line"></div>
+            </div>
+
+            <div class="detail-body">
+                <p id="description">…</p>
+
+                <h3 id="excursions-title" style="display:none;">Что посмотреть и куда сходить</h3>
+                <div class="cards-grid" id="excursions" style="grid-template-columns: repeat(2, 1fr);"></div>
+
+                <h3 id="articles-title" style="display:none;">Статьи об этом месте</h3>
+                <div id="articles"></div>
+            </div>
+        </div>
+
+        <aside class="detail-aside">
+            <div class="aside-card">
+                <h3 style="font-size:18px;margin-bottom:14px;">Кратко</h3>
+                <div id="brief"></div>
+
+                <button class="btn btn--primary btn--lg btn--block" id="apply-btn" style="margin-top:14px;">
+                    Заявка на консультацию
+                </button>
+                <button class="btn btn--ghost btn--block" id="fav-btn" style="margin-top:10px;">
+                    <span id="fav-ic"></span>
+                    <span id="fav-text">В избранное</span>
+                </button>
+            </div>
+
+            <div class="aside-card" id="siblings-card" style="display:none;">
+                <h3 style="font-size:16px;margin-bottom:12px;">Рядом в этой стране</h3>
+                <div id="siblings"></div>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/request-modal.js"></script>
+<script src="/js/destination.js"></script>
+
+</body>
+</html>

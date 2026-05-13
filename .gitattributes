@@ -1,0 +1,5 @@
+# Гарантия LF для shell-скриптов и docker entrypoint —
+# иначе bash в Linux-контейнере споткнётся о CRLF
+*.sh text eol=lf
+docker/entrypoint.sh text eol=lf
+Dockerfile text eol=lf

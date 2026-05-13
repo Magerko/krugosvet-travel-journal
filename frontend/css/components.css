@@ -1,0 +1,334 @@
+/* ============================================================
+   Общие компоненты: шапка, футер, кнопки, формы, карточки.
+   Используются на всех страницах.
+   ============================================================ */
+
+/* ---------- Шапка ---------- */
+.site-header {
+    border-bottom: 1px solid var(--line);
+    padding: 20px var(--page-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+}
+
+.brand__mark {
+    width: 34px;
+    height: 34px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand__name {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    color: var(--ink);
+}
+
+.brand__sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.site-nav {
+    display: flex;
+    gap: 30px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+.site-nav a {
+    position: relative;
+    padding-bottom: 22px;
+    margin-bottom: -22px;     /* чтобы линия активного пункта совпадала с border шапки */
+    transition: color .15s;
+}
+
+.site-nav a:hover { color: var(--ink); }
+
+.site-nav a.is-active {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.site-nav a.is-active::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: var(--accent);
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 13px;
+}
+
+.theme-toggle {
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+    transition: border-color .15s, color .15s;
+}
+
+.theme-toggle:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+.user-link {
+    color: var(--muted);
+    transition: color .15s;
+}
+.user-link:hover { color: var(--ink); }
+
+/* ---------- Кнопки ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s, transform .05s;
+    white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+
+.btn--primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+}
+.btn--primary:hover:not(:disabled) { opacity: .92; }
+
+.btn--ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+}
+.btn--ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+.btn--lg { padding: 14px 22px; font-size: 14px; }
+.btn--block { width: 100%; }
+
+/* ---------- Поля ввода ---------- */
+.field {
+    margin-bottom: 14px;
+}
+.field__label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+.field__input,
+.field__select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .15s;
+}
+.field__input:focus,
+.field__select:focus { border-color: var(--accent); }
+.field__error {
+    color: var(--danger);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ---------- Чекбоксы (свои, чтобы стилизовались под тему) ---------- */
+.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+.check input { display: none; }
+.check__box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--accent-ink);
+    font-size: 10px;
+    transition: background .12s, border-color .12s;
+}
+.check input:checked + .check__box {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.check input:checked + .check__box::after { content: "✓"; }
+
+/* ---------- Бейджи / чипсы ---------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg-soft);
+    color: var(--muted);
+}
+.badge--ochre  { background: var(--ochre);   color: var(--bg); font-weight: 700; }
+.badge--accent { background: var(--accent);  color: var(--accent-ink); font-weight: 700; }
+.badge--ok     { background: rgba(42,110,63,.12);  color: var(--success); }
+.badge--err    { background: rgba(168,53,43,.12);  color: var(--danger); }
+.badge--warn   { background: rgba(182,116,31,.12); color: var(--ochre); }
+.badge--mute   { background: rgba(120,120,120,.12); color: var(--muted); }
+
+[data-theme="dark"] .badge--ok   { background: rgba(123,207,148,.16); }
+[data-theme="dark"] .badge--err  { background: rgba(224,126,118,.16); }
+[data-theme="dark"] .badge--warn { background: rgba(224,160,90,.18);  }
+
+/* ---------- Карточки ---------- */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.card--pad { padding: 20px; }
+.card--shadow { box-shadow: var(--shadow-card); }
+
+/* ---------- Хлебные крошки ---------- */
+.breadcrumbs {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.6px;
+    margin-bottom: 6px;
+}
+.breadcrumbs__current { color: var(--ink); }
+
+/* ---------- Футер ---------- */
+.site-footer {
+    background: #0a3a32;
+    color: rgba(255,255,255,.85);
+    padding: 40px var(--page-padding);
+    font-size: 13px;
+    margin-top: 64px;
+}
+[data-theme="dark"] .site-footer {
+    background: var(--bg-soft);
+    color: var(--ink-soft);
+}
+
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.site-footer h4 {
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+[data-theme="dark"] .site-footer h4 { color: var(--ink); }
+.site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+[data-theme="dark"] .site-footer__brand { color: var(--ink); }
+
+.site-footer__links { display: block; line-height: 1.65; }
+
+@media (max-width: 780px) {
+    .site-header { padding: 14px 18px; flex-wrap: wrap; gap: 12px; }
+    .site-nav { display: none; }
+    .site-footer__grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Иконки ---------- */
+/* Все иконки рисуем инлайн SVG (см. js/icons.js).
+   Здесь — только размерности по умолчанию. */
+.icon {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+.icon--xs { width: 12px; height: 12px; }
+.icon--sm { width: 14px; height: 14px; }
+.icon--md { width: 16px; height: 16px; }
+.icon--lg { width: 20px; height: 20px; }
+
+/* ---------- Тосты (для уведомлений) ---------- */
+.toast-host {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 999;
+}
+.toast {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    box-shadow: var(--shadow-pop);
+    font-size: 13px;
+    max-width: 360px;
+    animation: toast-in .25s ease;
+}
+.toast--err { border-left-color: var(--danger); }
+.toast--ok  { border-left-color: var(--success); }
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экскурсия — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="detail-page">
+    <div class="breadcrumbs" id="breadcrumbs">Главная / Экскурсии / …</div>
+
+    <div class="detail-grid">
+        <div>
+            <div class="gallery" id="gallery"></div>
+
+            <div class="detail-title">
+                <div class="detail-title__meta" id="title-meta"></div>
+                <h1 id="title">…</h1>
+                <div class="detail-meta-line" id="meta-line"></div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab is-active" data-tab="about">Описание</button>
+                <button class="tab" data-tab="program">Программа</button>
+                <button class="tab" data-tab="comments">Комментарии</button>
+            </div>
+
+            <div class="detail-body" id="tab-about">
+                <h3>О чём эта экскурсия</h3>
+                <p id="description">…</p>
+            </div>
+
+            <div class="detail-body" id="tab-program" style="display:none;">
+                <h3>Программа</h3>
+                <p id="program">…</p>
+            </div>
+
+            <!-- Комментарии -->
+            <section class="comments-section" id="tab-comments" style="display:none;">
+                <h3 id="comments-title">Комментарии</h3>
+                <div id="comments-list"></div>
+
+                <div class="comment-form" id="comment-form">
+                    <textarea id="comment-text" placeholder="Поделитесь опытом или задайте вопрос…"></textarea>
+                    <div class="comment-form__foot">
+                        <span class="comment-form__hint" id="comment-hint">Только зарегистрированные пользователи.</span>
+                        <button class="btn btn--primary" id="submit-comment">Отправить</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Похожие -->
+            <section class="related-section" id="related-section" style="display:none;">
+                <h3>Похожие в этой стране</h3>
+                <div class="related-grid" id="related"></div>
+            </section>
+        </div>
+
+        <!-- Боковая панель -->
+        <aside class="detail-aside">
+            <div class="aside-card">
+                <div id="b-price-block"></div>
+                <div class="aside-card__rows" id="b-rows"></div>
+
+                <button class="btn btn--primary btn--lg btn--block" id="apply-btn" style="margin-top:14px;">
+                    Оставить заявку
+                </button>
+                <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;">
+                    Менеджер свяжется в течение часа
+                </div>
+
+                <button class="btn btn--ghost btn--block" id="fav-btn" style="margin-top:10px;">
+                    <span id="fav-ic"></span>
+                    <span id="fav-text">В избранное</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/request-modal.js"></script>
+<script src="/js/excursion.js"></script>
+
+</body>
+</html>

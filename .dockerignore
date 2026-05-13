@@ -1,0 +1,18 @@
+# Не тащим в образ всякую локальную мелочь
+backend/venv
+backend/__pycache__
+backend/**/__pycache__
+backend/.env
+*.pyc
+*.pyo
+.git
+.gitignore
+.idea
+.vscode
+*.db
+krugosvet.db
+designs/
+.claude/
+.DS_Store
+Thumbs.db
+README.md

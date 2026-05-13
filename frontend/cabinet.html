@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/listing.css">
+    <link rel="stylesheet" href="/css/cabinet.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="cabinet-page">
+    <div class="cabinet-grid">
+        <aside class="cab-side">
+            <div class="cab-user">
+                <div class="cab-user__avatar" id="user-avatar">?</div>
+                <div>
+                    <div class="cab-user__name" id="user-name">…</div>
+                    <div class="cab-user__id" id="user-email">…</div>
+                </div>
+            </div>
+
+            <div class="cab-nav">
+                <div class="cab-nav__item is-active" data-section="favorites">
+                    <span id="nav-fav-ic"></span>
+                    <span>Избранное</span>
+                    <span class="cab-nav__item__count" id="cnt-fav">—</span>
+                </div>
+                <div class="cab-nav__item" data-section="requests">
+                    <span id="nav-req-ic"></span>
+                    <span>Мои заявки</span>
+                    <span class="cab-nav__item__count" id="cnt-req">—</span>
+                </div>
+                <div class="cab-nav__item" data-section="profile">
+                    <span id="nav-prof-ic"></span>
+                    <span>Профиль</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="cab-main">
+            <!-- Избранное -->
+            <div id="section-favorites">
+                <div class="cab-main__head">
+                    <h1>Избранное</h1>
+                </div>
+
+                <div class="cab-stats">
+                    <div class="cab-stat">
+                        <div class="cab-stat__num" id="stat-articles">0</div>
+                        <div class="cab-stat__label">статей сохранено</div>
+                    </div>
+                    <div class="cab-stat">
+                        <div class="cab-stat__num" id="stat-excursions">0</div>
+                        <div class="cab-stat__label">экскурсий</div>
+                    </div>
+                    <div class="cab-stat">
+                        <div class="cab-stat__num" id="stat-destinations">0</div>
+                        <div class="cab-stat__label">мест отдыха</div>
+                    </div>
+                    <div class="cab-stat">
+                        <div class="cab-stat__num" id="stat-requests">0</div>
+                        <div class="cab-stat__label">заявок отправлено</div>
+                    </div>
+                </div>
+
+                <div class="fav-tabs">
+                    <button class="tab is-active" data-fav="articles">Статьи</button>
+                    <button class="tab" data-fav="excursions">Экскурсии</button>
+                    <button class="tab" data-fav="destinations">Места</button>
+                </div>
+
+                <div id="fav-articles" class="cards-grid"></div>
+                <div id="fav-excursions" class="cards-grid" style="display:none;"></div>
+                <div id="fav-destinations" class="cards-grid" style="display:none;"></div>
+            </div>
+
+            <!-- Заявки -->
+            <div id="section-requests" style="display:none;">
+                <div class="cab-main__head">
+                    <h1>Мои заявки</h1>
+                </div>
+                <div id="req-list"></div>
+            </div>
+
+            <!-- Профиль -->
+            <div id="section-profile" style="display:none;">
+                <div class="cab-main__head">
+                    <h1>Профиль</h1>
+                </div>
+                <div class="card card--pad" style="max-width: 540px;">
+                    <div class="field">
+                        <label class="field__label">Имя</label>
+                        <input class="field__input" id="p-name" disabled>
+                    </div>
+                    <div class="field">
+                        <label class="field__label">Email</label>
+                        <input class="field__input" id="p-email" disabled>
+                    </div>
+                    <div class="field">
+                        <label class="field__label">Телефон</label>
+                        <input class="field__input" id="p-phone" disabled>
+                    </div>
+                    <p class="muted" style="font-size: 12px; margin-top: 12px;">
+                        Редактирование профиля в этой версии портала не реализовано.
+                        Чтобы изменить контактные данные — напишите на info@krugosvet.ru.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/cabinet.js"></script>
+
+</body>
+</html>

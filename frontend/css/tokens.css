@@ -1,0 +1,69 @@
+/* ============================================================
+   Дизайн-токены: цвета, шрифты, тени.
+   Светлая тема — на :root, тёмная — на [data-theme="dark"].
+   Переключение делает js/theme.js.
+   ============================================================ */
+
+:root {
+    /* Светлая палитра — журнальная, с акцентом изумруд + терракота */
+    --bg:           #faf7f2;
+    --bg-soft:      #efeae0;
+    --surface:      #ffffff;
+    --ink:          #1d2520;
+    --ink-soft:     #353d36;
+    --muted:        #5a625b;
+    --line:         #ddd6c8;
+    --accent:       #0a5b50;   /* тёмно-изумрудный */
+    --accent-ink:   #ffffff;
+    --ochre:        #c5572d;   /* терракота вместо охры */
+    --success:      #2a6e3f;
+    --danger:       #a8352b;
+
+    /* Градиент-оверлей под изумрудный акцент */
+    --photo-overlay: linear-gradient(95deg, rgba(10,55,48,.88) 0%, rgba(10,55,48,.6) 55%, rgba(10,55,48,.2) 100%);
+
+    /* Псевдо-фото (если картинок нет — рисуем диагональные полосы) */
+    --place-base:   #eaeaea;
+    --place-stripe: #dedacf;
+    --place-ink:    #86806d;
+
+    /* Тени — вынес в переменную, чтобы для тёмной темы переопределить */
+    --shadow-card:  0 12px 32px rgba(15,30,60,.10);
+    --shadow-pop:   0 16px 40px rgba(15,30,60,.18);
+
+    /* Шрифты */
+    --font-sans:  "PT Sans", "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "PT Serif", "Source Serif 4", Georgia, serif;
+    --font-mono:  "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+    /* Сетка / контейнер */
+    --page-padding: 56px;
+    --radius-sm:    4px;
+    --radius-md:    6px;
+    --radius-lg:    10px;
+}
+
+/* Тёмная тема — глубокий лесной зелёный, тёплая контратипия */
+[data-theme="dark"] {
+    --bg:           #0e1411;
+    --bg-soft:      #161e1a;
+    --surface:      #1a2520;
+    --ink:          #efe9dc;
+    --ink-soft:     #c6bea9;
+    --muted:        #88857a;
+    --line:         #2a342e;
+    --accent:       #6fc1a8;
+    --accent-ink:   #0e1411;
+    --ochre:        #e8946a;
+    --success:      #7bcf94;
+    --danger:       #e07e76;
+
+    --photo-overlay: linear-gradient(95deg, rgba(6,12,9,.92) 0%, rgba(6,12,9,.65) 55%, rgba(6,12,9,.25) 100%);
+
+    --place-base:   #1c2230;
+    --place-stripe: #262c3a;
+    --place-ink:    #5d6479;
+
+    --shadow-card:  0 12px 32px rgba(0,0,0,.45);
+    --shadow-pop:   0 16px 40px rgba(0,0,0,.55);
+}

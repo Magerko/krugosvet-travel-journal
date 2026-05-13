@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кругосвет — туристический журнал</title>
+
+    <!-- theme.js должен быть первым, чтобы тема применилась до рендера -->
+    <script src="/js/theme.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <div class="hero__eyebrow eyebrow">
+            <span></span>
+            туристический журнал
+        </div>
+        <h1 class="hero__title">
+            Места, истории<br>
+            и <em>гайды<br>о путешествиях</em>.
+        </h1>
+        <p class="hero__lead">
+            <strong>Кругосвет</strong> — независимое издание о туризме. Новости индустрии,
+            подборки экскурсий, гайды по странам и городам. Без проплаченных рекомендаций.
+        </p>
+
+        <div class="hero__stats">
+            <div>
+                <div class="hero__stat-num" id="stat-articles">…</div>
+                <div class="hero__stat-label">статей</div>
+            </div>
+            <div>
+                <div class="hero__stat-num" id="stat-excursions">…</div>
+                <div class="hero__stat-label">экскурсий</div>
+            </div>
+            <div>
+                <div class="hero__stat-num" id="stat-destinations">…</div>
+                <div class="hero__stat-label">мест отдыха</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero__media">
+        <div class="hero__photo">
+            <img class="cover-img" loading="eager" alt="обложка выпуска"
+                 src="https://picsum.photos/seed/krugosvet-hero-cover/1200/700">
+        </div>
+
+        <!-- Главная статья выпуска -->
+        <a class="hero-pick" id="hero-pick" href="#"></a>
+
+        <div class="quote-card">
+            <div class="quote-card__head">читатель пишет</div>
+            <div class="quote-card__text">
+                «Подписался на „Кругосвет“ — теперь не покупаю Lonely Planet. Спокойно читаю, выбираю место и еду».
+            </div>
+            <div class="quote-card__author">— Сергей К.</div>
+        </div>
+    </div>
+</section>
+
+<!-- НОВОСТИ -->
+<section class="page" style="margin-top: 24px;">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">01 — новости туриндустрии</div>
+            <h2>Что обсуждают на этой неделе</h2>
+        </div>
+        <a href="/news" class="arrow-link">Все новости →</a>
+    </div>
+
+    <div class="news-grid" id="news-grid">
+        <div class="placeholder" style="height:380px;">загружаем…</div>
+        <div class="news-side"></div>
+    </div>
+</section>
+
+<!-- МЕСТА ОТДЫХА -->
+<section class="page" style="margin-top: 56px;">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">02 — места отдыха</div>
+            <h2>Куда читатели смотрят чаще всего</h2>
+        </div>
+        <div class="section-head__meta">
+            из таблицы <b>destinations</b> · <span id="dest-count">—</span>
+        </div>
+    </div>
+
+    <div class="destinations" id="destinations"></div>
+</section>
+
+<!-- ЭКСКУРСИИ -->
+<section class="page" style="margin-top: 56px;">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">03 — экскурсии и пакеты</div>
+            <h2>Подборка редакции</h2>
+        </div>
+        <a href="/excursions" class="arrow-link">Все экскурсии →</a>
+    </div>
+
+    <div class="excursions-grid" id="excursions"></div>
+</section>
+
+<!-- О ПРОЕКТЕ -->
+<section class="page" style="margin-top: 56px;">
+    <div class="why-us">
+        <div>
+            <div class="why-us__num">— 01</div>
+            <h3>Без рекламы</h3>
+            <p>Не берём оплату от отелей и агентств. Рекомендации честные.</p>
+        </div>
+        <div>
+            <div class="why-us__num">— 02</div>
+            <h3>Только проверенное</h3>
+            <p>Авторы редакции лично ездят в материалы. Никаких пресс-релизов.</p>
+        </div>
+        <div>
+            <div class="why-us__num">— 03</div>
+            <h3>Свежие данные</h3>
+            <p>Цены и расписания — на момент публикации, обновляем регулярно.</p>
+        </div>
+        <div>
+            <div class="why-us__num">— 04</div>
+            <h3>Свои гайды</h3>
+            <p>Сохраняйте статьи и места в избранное — собирайте свой маршрут.</p>
+        </div>
+    </div>
+</section>
+
+<div id="layout-footer"></div>
+
+<!-- Скрипты -->
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/home.js"></script>
+
+</body>
+</html>

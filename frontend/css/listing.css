@@ -1,0 +1,294 @@
+/* Общие стили для списочных страниц: каталог экскурсий, новостей, мест.
+   Используется на excursions.html, news.html, destinations.html. */
+
+.listing-page {
+    background: var(--bg-soft);
+    min-height: calc(100vh - 80px);
+    padding: 28px var(--page-padding) 56px;
+}
+
+.listing-page__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.listing-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.listing-head h1 {
+    font-size: 44px;
+    letter-spacing: -1px;
+    margin: 6px 0;
+}
+.listing-head__count {
+    font-size: 13px;
+    color: var(--muted);
+}
+.listing-head__count b { color: var(--ink); font-weight: 700; }
+
+.listing-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+}
+
+.sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+}
+.sidebar-card h3 {
+    font-size: 16px;
+    margin: 0 0 14px;
+}
+.sidebar-card__group { margin-bottom: 18px; }
+.sidebar-card__title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Сетка карточек (общая для экскурсий) */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.cards-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+.search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+}
+.search-input:focus { border-color: var(--accent); }
+
+/* Кнопки-чипсы для категорий новостей и т.п. */
+.tag-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    margin-right: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: border-color .12s;
+}
+.tag-pill:hover { border-color: var(--accent); }
+.tag-pill.is-active {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+}
+
+/* Карточки экскурсий — переиспользуем стили с главной */
+.exc-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+    display: flex;
+    flex-direction: column;
+}
+.exc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+.exc-card__photo { height: 200px; }
+.exc-card__body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.exc-card__kind {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--ochre);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.exc-card__title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+}
+.exc-card__sum {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+}
+.exc-card__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+}
+.exc-card__price {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+/* Карточки мест отдыха */
+.dest-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+    display: flex;
+    flex-direction: column;
+}
+.dest-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+.dest-card__photo { height: 180px; }
+.dest-card__body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.dest-card__title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+}
+.dest-card__sum {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+}
+.dest-card__country {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ochre);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Карточки статей в листинге */
+.article-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .12s;
+    display: flex;
+    flex-direction: column;
+}
+.article-card:hover { border-color: var(--accent); }
+.article-card__photo { height: 200px; }
+.article-card__body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.article-card__cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--ochre);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.article-card__title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+}
+.article-card__sum {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    flex: 1;
+}
+.article-card__meta {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+}
+
+.empty-block {
+    grid-column: 1 / -1;
+    padding: 60px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+}
+
+/* Пагинация */
+.pager {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 24px;
+}
+.pager button,
+.pager span {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--font-mono);
+}
+.pager .is-active {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+}
+
+@media (max-width: 1000px) {
+    .listing-grid { grid-template-columns: 1fr; }
+    .sidebar-card { position: static; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .cards-grid, .cards-grid--2 { grid-template-columns: 1fr; }
+}

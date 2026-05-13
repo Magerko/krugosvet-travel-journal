@@ -1,0 +1,425 @@
+/* Стили только для главной страницы информационного портала. */
+
+/* ---------- Hero ---------- */
+.hero {
+    padding: 60px var(--page-padding) 56px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.hero__eyebrow span:first-child {
+    width: 24px;
+    height: 1px;
+    background: var(--ochre);
+    display: inline-block;
+}
+
+.hero__title {
+    font-family: var(--font-serif);
+    font-size: 76px;
+    line-height: 0.98;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1.2px;
+}
+.hero__title em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.hero__lead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 24px;
+    max-width: 480px;
+}
+.hero__lead strong { color: var(--ink); font-weight: 700; }
+
+.hero__stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+}
+.hero__stat-num {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+}
+.hero__stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.hero__media {
+    position: relative;
+}
+.hero__photo {
+    width: 100%;
+    height: 520px;
+    border-radius: var(--radius-md);
+}
+
+/* Карточка с заголовком "сегодня в журнале" — поверх hero-фото */
+.hero-pick {
+    position: absolute;
+    left: -40px;
+    bottom: 32px;
+    width: 380px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px;
+    box-shadow: var(--shadow-pop);
+}
+.hero-pick__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+}
+.hero-pick__head .icon { color: var(--ochre); }
+
+.hero-pick__title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin: 0 0 8px;
+}
+.hero-pick__sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+.hero-pick__meta {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+}
+
+.quote-card {
+    position: absolute;
+    right: -16px;
+    top: 24px;
+    background: var(--bg-soft);
+    padding: 14px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    max-width: 220px;
+    transform: rotate(2.5deg);
+}
+.quote-card__head {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ochre);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.quote-card__text {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-soft);
+    line-height: 1.4;
+}
+.quote-card__author {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* ---------- Заголовок секции ---------- */
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.section-head h2 {
+    font-size: 36px;
+    margin: 8px 0 4px;
+    letter-spacing: -0.6px;
+}
+.section-head__meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+.section-head__meta b { color: var(--accent); font-weight: 600; }
+
+/* ---------- Лента новостей: 1 большая + 2 средних ---------- */
+.news-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 16px;
+}
+.news-big { position: relative; overflow: hidden; cursor: pointer; }
+.news-big__photo { height: 380px; }
+.news-big__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--photo-overlay);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+}
+.news-big__cat {
+    display: inline-flex;
+    padding: 4px 12px;
+    background: var(--ochre);
+    color: var(--bg);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    align-self: flex-start;
+}
+.news-big__title {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.8px;
+    color: white;
+    margin: 0 0 12px;
+}
+.news-big__sum {
+    font-size: 14px;
+    opacity: 0.9;
+    line-height: 1.5;
+    max-width: 540px;
+}
+.news-big__foot {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+
+.news-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.news-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .12s;
+}
+.news-card:hover { border-color: var(--accent); }
+.news-card__photo { height: 100%; min-height: 110px; }
+.news-card__body { padding: 12px 14px 12px 0; }
+.news-card__cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ochre);
+    margin-bottom: 4px;
+}
+.news-card__title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+.news-card__meta {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+/* ---------- Места отдыха — 4 карточки ---------- */
+.destinations {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+.dest-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+    position: relative;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+}
+.dest-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+.dest-card__photo { height: 180px; }
+.dest-card__body { padding: 16px; }
+.dest-card__title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+}
+.dest-card__sum {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* ---------- Экскурсии: горизонтальная сетка ---------- */
+.excursions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.exc-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+    display: flex;
+    flex-direction: column;
+}
+.exc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+.exc-card__photo { height: 200px; }
+.exc-card__body {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.exc-card__kind {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--ochre);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.exc-card__title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+}
+.exc-card__sum {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+}
+.exc-card__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+}
+.exc-card__price {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+/* ---------- Why us ---------- */
+.why-us {
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 64px;
+}
+.why-us__num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ochre);
+    margin-bottom: 10px;
+}
+.why-us h3 {
+    font-size: 19px;
+    letter-spacing: -0.3px;
+}
+.why-us p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero__title { font-size: 56px; }
+    .hero-pick { position: static; margin-top: 16px; width: 100%; }
+    .quote-card { display: none; }
+    .news-grid { grid-template-columns: 1fr; }
+    .destinations { grid-template-columns: repeat(2, 1fr); }
+    .excursions-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-us { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 24px var(--page-padding) 32px; }
+    .hero__title { font-size: 40px; }
+    .hero__stats { flex-wrap: wrap; gap: 16px; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .section-head h2 { font-size: 26px; }
+    .news-big__photo { height: 240px; }
+    .news-big__title { font-size: 22px; }
+    .news-big__overlay { padding: 16px; }
+    .destinations { grid-template-columns: 1fr; }
+    .excursions-grid { grid-template-columns: 1fr; }
+}

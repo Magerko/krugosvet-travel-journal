@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экскурсии и пакеты — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/listing.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="listing-page">
+    <div class="listing-page__inner">
+        <div class="breadcrumbs">
+            Главная / <span class="breadcrumbs__current">Экскурсии и пакеты</span>
+        </div>
+        <div class="listing-head">
+            <div>
+                <div class="eyebrow">каталог</div>
+                <h1>Экскурсии и тур-пакеты</h1>
+            </div>
+            <div class="listing-head__count">
+                Найдено <b id="found-total">…</b>
+            </div>
+        </div>
+
+        <div class="listing-grid">
+            <!-- Фильтры -->
+            <aside class="sidebar-card">
+                <h3 class="serif">Фильтры</h3>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Тип</div>
+                    <div id="kind-pills">
+                        <span class="tag-pill is-active" data-kind="">Всё</span>
+                        <span class="tag-pill" data-kind="excursion">Экскурсии</span>
+                        <span class="tag-pill" data-kind="package">Пакеты</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Страна</div>
+                    <div id="country-list"></div>
+                </div>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Цена до, $</div>
+                    <input type="number" class="search-input" id="price-max" placeholder="1200">
+                </div>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Сортировка</div>
+                    <select id="sort" class="search-input">
+                        <option value="">по умолчанию</option>
+                        <option value="price_asc">по цене ↑</option>
+                        <option value="price_desc">по цене ↓</option>
+                        <option value="title">по алфавиту</option>
+                    </select>
+                </div>
+
+                <button class="btn btn--primary btn--block" id="apply">Применить</button>
+            </aside>
+
+            <!-- Карточки -->
+            <div>
+                <div class="cards-grid" id="cards"></div>
+                <div class="pager" id="pager"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/excursions.js"></script>
+
+</body>
+</html>

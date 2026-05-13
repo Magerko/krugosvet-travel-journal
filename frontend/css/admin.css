@@ -1,0 +1,249 @@
+/* Админка. Похожа на личный кабинет: левый сайдбар + основной блок. */
+
+.admin-page {
+    background: var(--bg-soft);
+    min-height: calc(100vh - 80px);
+    padding: 28px var(--page-padding) 56px;
+}
+.admin-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.admin-side {
+    height: fit-content;
+}
+.admin-side__title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.admin-nav {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px;
+}
+.admin-nav__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    cursor: pointer;
+}
+.admin-nav__item .icon { color: var(--muted); }
+.admin-nav__item.is-active {
+    background: rgba(14,42,90,.06);
+    color: var(--accent);
+    font-weight: 700;
+}
+[data-theme="dark"] .admin-nav__item.is-active { background: rgba(123,166,255,.1); }
+.admin-nav__item.is-active .icon { color: var(--accent); }
+.admin-nav__count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+/* "Состояние БД" — декоративный блок снизу */
+.db-status {
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+}
+.db-status__head { color: var(--muted); margin-bottom: 6px; }
+.db-status__ok { color: var(--success); margin-bottom: 4px; }
+
+/* KPI строка */
+.admin-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.admin-kpi {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+}
+.admin-kpi__num {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+.admin-kpi__label {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 600;
+    margin-top: 2px;
+}
+.admin-kpi__sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: var(--font-mono);
+}
+
+/* Шапка раздела */
+.admin-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 18px;
+}
+.admin-head__sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.6px;
+}
+.admin-head h1 {
+    font-size: 32px;
+    margin: 4px 0 0;
+    letter-spacing: -0.8px;
+}
+.admin-head__actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Тулбар над таблицей */
+.admin-toolbar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.admin-toolbar input.search-input { max-width: 320px; }
+
+.admin-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.admin-table thead { background: var(--bg-soft); }
+.admin-table th {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+.admin-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+.admin-table tr:last-child td { border-bottom: none; }
+
+.admin-table .action {
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 12px;
+}
+.admin-table .action--danger { color: var(--danger); }
+
+.sql-foot {
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-soft);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Лог активности */
+.audit {
+    margin-top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+}
+.audit h3 {
+    font-size: 17px;
+    margin: 0 0 12px;
+}
+.audit__row {
+    display: grid;
+    grid-template-columns: 110px 80px 110px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+.audit__row:last-child { border-bottom: none; }
+.audit__time { color: var(--muted); }
+.audit__op-INSERT { color: var(--success); font-weight: 700; }
+.audit__op-UPDATE { color: var(--accent); font-weight: 700; }
+.audit__op-DELETE { color: var(--danger); font-weight: 700; }
+.audit__op-LOGIN  { color: var(--ochre);  font-weight: 700; }
+.audit__table  { color: var(--ink-soft); }
+.audit__msg    { color: var(--ink); font-family: var(--font-sans); }
+
+/* Модалка формы */
+.admin-modal-form .field { margin-bottom: 12px; }
+.admin-modal-form .field__input,
+.admin-modal-form .field__select,
+.admin-modal-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    outline: none;
+}
+.admin-modal-form textarea { min-height: 80px; resize: vertical; }
+.admin-modal-form .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 1000px) {
+    .admin-grid { grid-template-columns: 1fr; }
+    .admin-kpis { grid-template-columns: repeat(2, 1fr); }
+    .audit__row { grid-template-columns: 1fr; gap: 4px; }
+}

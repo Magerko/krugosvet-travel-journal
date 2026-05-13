@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Места отдыха — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/listing.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="listing-page">
+    <div class="listing-page__inner">
+        <div class="breadcrumbs">Главная / <span class="breadcrumbs__current">Места отдыха</span></div>
+        <div class="listing-head">
+            <div>
+                <div class="eyebrow">гиды и обзоры</div>
+                <h1>Места отдыха</h1>
+            </div>
+            <div class="listing-head__count">Найдено <b id="found-total">…</b></div>
+        </div>
+
+        <div class="listing-grid">
+            <aside class="sidebar-card">
+                <h3 class="serif">Фильтры</h3>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Поиск</div>
+                    <input type="text" id="search" class="search-input" placeholder="Турция, Кемер…">
+                </div>
+
+                <div class="sidebar-card__group">
+                    <div class="sidebar-card__title">Страна</div>
+                    <div id="country-list"></div>
+                </div>
+            </aside>
+
+            <div>
+                <div class="cards-grid" id="cards"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/destinations.js"></script>
+
+</body>
+</html>

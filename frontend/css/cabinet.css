@@ -1,0 +1,167 @@
+/* Личный кабинет: левый сайдбар + основной блок. */
+
+.cabinet-page {
+    background: var(--bg-soft);
+    min-height: calc(100vh - 80px);
+    padding: 32px var(--page-padding) 64px;
+}
+.cabinet-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ---- Сайдбар ---- */
+.cab-side {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    height: fit-content;
+}
+.cab-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.cab-user__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 700;
+}
+.cab-user__name {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 700;
+}
+.cab-user__id {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+.cab-nav__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: transparent;
+    border-left: 2px solid transparent;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 14px;
+}
+.cab-nav__item .icon { color: var(--muted); }
+.cab-nav__item.is-active {
+    background: var(--bg-soft);
+    border-left-color: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+}
+.cab-nav__item.is-active .icon { color: var(--accent); }
+.cab-nav__item__count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+
+/* ---- Основной блок ---- */
+.cab-main {
+    background: transparent;
+}
+.cab-main__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+.cab-main__head h1 {
+    font-size: 36px;
+    letter-spacing: -0.8px;
+    margin: 0;
+}
+
+/* Стат-плитки */
+.cab-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.cab-stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+}
+.cab-stat__num {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+.cab-stat__label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* Заявки */
+.req-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 16px;
+    align-items: center;
+}
+.req-card__title {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+}
+.req-card__sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+}
+.req-card__msg {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+
+/* Таб-переключатели в избранном */
+.fav-tabs {
+    display: flex;
+    gap: 26px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+}
+
+@media (max-width: 1000px) {
+    .cabinet-grid { grid-template-columns: 1fr; }
+    .cab-stats { grid-template-columns: repeat(2, 1fr); }
+}

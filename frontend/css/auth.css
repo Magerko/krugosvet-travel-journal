@@ -1,0 +1,179 @@
+/* Страница входа/регистрации. Левая часть — постер, правая — форма. */
+
+.auth-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 80px);
+}
+
+.auth-poster {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-soft);
+}
+.auth-poster__photo {
+    position: absolute;
+    inset: 0;
+}
+.auth-poster__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--photo-overlay);
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+}
+.auth-poster__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+.auth-poster h2 {
+    font-family: var(--font-serif);
+    font-size: 52px;
+    font-weight: 700;
+    margin: 16px 0 0;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    color: white;
+}
+.auth-poster blockquote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.6;
+    opacity: 0.95;
+    max-width: 460px;
+    margin: 0;
+}
+.auth-poster cite {
+    font-size: 12px;
+    margin-top: 14px;
+    opacity: 0.8;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    display: block;
+    font-style: normal;
+}
+
+.auth-form-wrap {
+    padding: 72px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-tabs {
+    display: inline-flex;
+    padding: 4px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    margin-bottom: 28px;
+    align-self: flex-start;
+}
+.auth-tab {
+    padding: 8px 22px;
+    font-size: 13px;
+    color: var(--muted);
+    border-radius: 100px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.auth-tab.is-active {
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+
+.auth-form h1 {
+    font-size: 36px;
+    margin: 0 0 8px;
+    letter-spacing: -0.8px;
+}
+.auth-form p {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 28px;
+}
+
+/* Обёртка инпута с кнопкой показа пароля */
+.field__pwd {
+    position: relative;
+}
+.field__pwd .field__input { padding-right: 78px; }
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    line-height: 1;
+}
+.password-toggle:hover { text-decoration: underline; }
+
+.auth-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 22px;
+}
+.auth-form .forgot-link {
+    font-size: 13px;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+.auth-foot {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+}
+.auth-foot button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0;
+}
+
+@media (max-width: 900px) {
+    .auth-page { grid-template-columns: 1fr; }
+    .auth-poster { min-height: 220px; }
+    .auth-poster__overlay { padding: 24px; }
+    .auth-poster h2 { font-size: 28px; }
+    .auth-poster blockquote { display: none; }
+    .auth-form-wrap { padding: 32px var(--page-padding); }
+}

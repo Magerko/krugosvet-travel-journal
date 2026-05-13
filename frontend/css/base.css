@@ -1,0 +1,114 @@
+/* ============================================================
+   Базовые стили: reset, типографика.
+   ============================================================ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* плавный переход при смене темы — но только для цвета и фона, чтоб не лагало */
+    transition: background-color .25s ease, color .25s ease;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.4px;
+}
+
+p { margin: 0; }
+
+/* Заполнение для "пока картинки нет" — диагональная штриховка с подписью.
+   Используется как фолбэк, если картинка не загрузилась. */
+.placeholder {
+    background:
+        repeating-linear-gradient(135deg,
+            var(--place-base) 0 16px,
+            var(--place-stripe) 16px 17px);
+    display: flex;
+    align-items: flex-end;
+    padding: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--place-ink);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+/* Фото-обложка: занимает всю высоту/ширину родителя, центрируется и кропается. */
+.cover-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--place-base);   /* фон пока загружается */
+}
+
+/* Утилитарные классы — пользуюсь немного, не как в Tailwind */
+.mono   { font-family: var(--font-mono); }
+.serif  { font-family: var(--font-serif); }
+.muted  { color: var(--muted); }
+.ochre  { color: var(--ochre); }
+
+.eyebrow {
+    /* "глазной кронштейн" — мелкий заголовок над секцией, цвет охры */
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ochre);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Контейнер страницы — общий горизонтальный padding */
+.page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
+}
+
+/* Ссылка-стрелка с подчёркиванием как в макете */
+.arrow-link {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* На мобиле уменьшаем общие отступы */
+@media (max-width: 780px) {
+    .page { padding: 0 18px; }
+    :root { --page-padding: 18px; }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статья — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/listing.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="detail-page">
+    <div class="breadcrumbs" id="breadcrumbs">Главная / Новости / …</div>
+
+    <article class="detail-grid detail-grid--single">
+        <div>
+            <!-- Шапка статьи -->
+            <header style="margin-bottom: 28px;">
+                <div class="detail-title__meta" id="title-meta"></div>
+                <h1 id="title" style="font-size: 44px; line-height: 1.05; letter-spacing: -1px;">…</h1>
+                <p id="summary" style="font-family: var(--font-serif); font-size: 20px; color: var(--ink-soft); margin-top: 16px; line-height: 1.5;">…</p>
+                <div id="byline" style="margin-top: 18px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: 0.5px;"></div>
+            </header>
+
+            <!-- Обложка -->
+            <div class="placeholder" id="cover" style="height: 400px; border-radius: 10px; margin-bottom: 32px;">обложка</div>
+
+            <!-- Тело статьи -->
+            <div class="article-body" id="body"></div>
+
+            <!-- Кнопка избранного и комментарии -->
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center;">
+                <button class="btn btn--ghost" id="fav-btn">
+                    <span id="fav-ic"></span>
+                    <span id="fav-text">В избранное</span>
+                </button>
+                <span class="muted" style="font-size: 13px;" id="views-info"></span>
+            </div>
+
+            <!-- Комментарии -->
+            <section class="comments-section">
+                <h3 id="comments-title">Комментарии</h3>
+                <div id="comments-list"></div>
+
+                <div class="comment-form" id="comment-form">
+                    <textarea id="comment-text" placeholder="Что вы об этом думаете?"></textarea>
+                    <div class="comment-form__foot">
+                        <span class="comment-form__hint" id="comment-hint">Только зарегистрированные пользователи.</span>
+                        <button class="btn btn--primary" id="submit-comment">Отправить</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Похожие -->
+            <section class="related-section" id="related-section" style="display:none;">
+                <h3>Читать дальше</h3>
+                <div class="cards-grid" id="related"></div>
+            </section>
+        </div>
+    </article>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/article.js"></script>
+
+</body>
+</html>

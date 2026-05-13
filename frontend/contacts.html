@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/contacts.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="contacts-page">
+    <div class="page" style="padding-top: 32px;">
+        <div class="breadcrumbs">Главная / <span class="breadcrumbs__current">Контакты</span></div>
+        <div class="contacts-head">
+            <div class="eyebrow">связь с редакцией</div>
+            <h1>Контакты</h1>
+            <p class="contacts-lead">
+                Пишите по любому поводу — от рекомендаций до сотрудничества с авторами.
+                Менеджер отвечает в рабочие часы (10:00–19:00 МСК), на письма — в течение суток.
+            </p>
+        </div>
+
+        <div class="contacts-grid">
+            <div class="contacts-cards">
+                <a class="contact-card" href="tel:+15550100001">
+                    <div class="contact-card__ic" id="ic-phone"></div>
+                    <div class="contact-card__label">Телефон</div>
+                    <div class="contact-card__value">+1 (555) 010-0001</div>
+                    <div class="contact-card__sub">международная линия, 10:00–22:00</div>
+                </a>
+                <a class="contact-card" href="mailto:hello@krugosvet.travel">
+                    <div class="contact-card__ic" id="ic-email"></div>
+                    <div class="contact-card__label">Email</div>
+                    <div class="contact-card__value">hello@krugosvet.travel</div>
+                    <div class="contact-card__sub">отвечаем в течение суток</div>
+                </a>
+                <div class="contact-card">
+                    <div class="contact-card__ic" id="ic-pin"></div>
+                    <div class="contact-card__label">Адрес редакции</div>
+                    <div class="contact-card__value">Cardinal Street, 12 · Лондон</div>
+                    <div class="contact-card__sub">район Сохо, 5 минут от метро</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card__ic" id="ic-clock"></div>
+                    <div class="contact-card__label">Часы работы</div>
+                    <div class="contact-card__value">Пн–Пт: 10:00–19:00</div>
+                    <div class="contact-card__sub">Сб, Вс: только дежурный</div>
+                </div>
+            </div>
+
+            <aside class="contacts-aside">
+                <div class="aside-card">
+                    <h3 style="font-size:18px;margin-bottom:14px;">Написать нам</h3>
+                    <p class="muted" style="font-size:13px;line-height:1.5;margin-bottom:14px;">
+                        Если хотите задать вопрос про экскурсию или предложить тему — оставьте короткое сообщение.
+                        Мы свяжемся в течение часа в рабочее время.
+                    </p>
+                    <button class="btn btn--primary btn--lg btn--block" id="open-modal">
+                        Открыть форму
+                    </button>
+                </div>
+
+                <div class="aside-card" style="margin-top:16px;">
+                    <h3 style="font-size:16px;margin-bottom:10px;">Соцсети</h3>
+                    <div class="socials">
+                        <a href="#" class="socials__item">Telegram-канал</a>
+                        <a href="#" class="socials__item">VK-сообщество</a>
+                        <a href="#" class="socials__item">RSS-лента</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Карта (плейсхолдер с координатами) -->
+        <section class="contacts-map">
+            <div class="contacts-map__inner">
+                <img class="contacts-map__img" alt="Карта офиса"
+                     src="https://picsum.photos/seed/krugosvet-map/1280/360">
+                <div class="contacts-map__pin" id="pin-icon"></div>
+                <div class="contacts-map__caption">
+                    <div class="mono" style="font-size:11px;color:var(--muted);letter-spacing:0.5px;">офис редакции</div>
+                    <div class="serif" style="font-size:18px;font-weight:700;margin-top:2px;">Cardinal Street, 12 · Лондон</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/request-modal.js"></script>
+<script src="/js/contacts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/venv/
+backend/.env
+*.egg-info/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Локальная БД (SQLite-режим)
+*.db
+krugosvet.db
+
+# Логи
+*.log
+
+# Внутренние артефакты Claude Code
+.claude/
+
+# Docker volumes (если кто-то вынесет на хост)
+docker/data/

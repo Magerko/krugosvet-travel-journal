@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка — Кругосвет</title>
+    <script src="/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/listing.css">
+    <link rel="stylesheet" href="/css/detail.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div id="layout-header"></div>
+
+<main class="admin-page">
+    <div class="admin-grid">
+        <aside class="admin-side">
+            <div class="admin-side__title">admin · mysql</div>
+            <div class="admin-nav" id="admin-nav">
+                <div class="admin-nav__item is-active" data-section="articles">
+                    <span id="ic-art"></span>
+                    <span>Статьи</span>
+                    <span class="admin-nav__count" id="cnt-articles">—</span>
+                </div>
+                <div class="admin-nav__item" data-section="excursions">
+                    <span id="ic-exc"></span>
+                    <span>Экскурсии</span>
+                    <span class="admin-nav__count" id="cnt-excursions">—</span>
+                </div>
+                <div class="admin-nav__item" data-section="destinations">
+                    <span id="ic-dest"></span>
+                    <span>Места</span>
+                    <span class="admin-nav__count" id="cnt-destinations">—</span>
+                </div>
+                <div class="admin-nav__item" data-section="requests">
+                    <span id="ic-req"></span>
+                    <span>Заявки</span>
+                    <span class="admin-nav__count" id="cnt-requests">—</span>
+                </div>
+                <div class="admin-nav__item" data-section="comments">
+                    <span id="ic-com"></span>
+                    <span>Комментарии</span>
+                    <span class="admin-nav__count" id="cnt-comments">—</span>
+                </div>
+            </div>
+
+            <div class="db-status">
+                <div class="db-status__head"># db status</div>
+                <div class="db-status__ok">● mysql 8.x connected</div>
+                <div class="muted" id="db-tables">— таблиц</div>
+                <div class="muted" id="db-uptime">uptime —</div>
+            </div>
+        </aside>
+
+        <section>
+            <!-- KPI всегда видны -->
+            <div class="admin-kpis" id="kpis"></div>
+
+            <!-- ============== СТАТЬИ ============== -->
+            <div id="section-articles">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">articles · <span id="art-count">—</span></div>
+                        <h1>Управление статьями</h1>
+                    </div>
+                    <div class="admin-head__actions">
+                        <button class="btn btn--primary" id="btn-new-article">+ Новая статья</button>
+                    </div>
+                </div>
+
+                <div class="admin-toolbar">
+                    <input type="text" class="search-input" id="art-search" placeholder="Поиск по заголовку…">
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">#</th>
+                                <th>Заголовок</th>
+                                <th style="width:120px;">Категория</th>
+                                <th style="width:90px;">Опубл.</th>
+                                <th style="width:80px;">Просм.</th>
+                                <th style="width:120px;">Дата</th>
+                                <th style="width:130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="art-tbody"></tbody>
+                    </table>
+                    <div class="sql-foot">
+                        <code>SELECT * FROM articles ORDER BY published_at DESC</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== ЭКСКУРСИИ ============== -->
+            <div id="section-excursions" style="display:none;">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">excursions · <span id="exc-count">—</span></div>
+                        <h1>Экскурсии и пакеты</h1>
+                    </div>
+                    <div class="admin-head__actions">
+                        <button class="btn btn--primary" id="btn-new-excursion">+ Новая экскурсия</button>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap" style="border-radius: 8px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">#</th>
+                                <th>Название</th>
+                                <th style="width:90px;">Тип</th>
+                                <th>Место</th>
+                                <th style="width:110px;">Длительн.</th>
+                                <th style="width:100px;">Цена от</th>
+                                <th style="width:130px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="exc-tbody"></tbody>
+                    </table>
+                    <div class="sql-foot">
+                        <code>SELECT * FROM excursions ORDER BY id DESC</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== МЕСТА ============== -->
+            <div id="section-destinations" style="display:none;">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">destinations · <span id="dest-count">—</span></div>
+                        <h1>Места отдыха</h1>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap" style="border-radius: 8px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">#</th>
+                                <th>Название</th>
+                                <th style="width:120px;">Страна</th>
+                                <th style="width:120px;">Город</th>
+                                <th style="width:120px;">Сезон</th>
+                                <th style="width:90px;">Featured</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dest-tbody"></tbody>
+                    </table>
+                    <div class="sql-foot">
+                        <code>SELECT * FROM destinations ORDER BY title</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== ЗАЯВКИ ============== -->
+            <div id="section-requests" style="display:none;">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">consult_requests</div>
+                        <h1>Заявки на консультацию</h1>
+                    </div>
+                </div>
+
+                <div class="admin-toolbar">
+                    <span class="tag-pill is-active" data-status="">Все</span>
+                    <span class="tag-pill" data-status="new">Новые</span>
+                    <span class="tag-pill" data-status="in_work">В работе</span>
+                    <span class="tag-pill" data-status="done">Обработаны</span>
+                    <span class="tag-pill" data-status="cancelled">Отменены</span>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">#</th>
+                                <th style="width:120px;">Дата</th>
+                                <th>Клиент</th>
+                                <th>Контакты</th>
+                                <th>Экскурсия</th>
+                                <th style="width:120px;">Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="req-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============== КОММЕНТАРИИ ============== -->
+            <div id="section-comments" style="display:none;">
+                <div class="admin-head">
+                    <div>
+                        <div class="admin-head__sub">comments</div>
+                        <h1>Модерация комментариев</h1>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap" style="border-radius: 8px;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">#</th>
+                                <th style="width:120px;">Где</th>
+                                <th style="width:140px;">Автор</th>
+                                <th>Текст</th>
+                                <th style="width:90px;">Статус</th>
+                                <th style="width:160px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="com-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Лог -->
+            <div class="audit">
+                <h3>Активность</h3>
+                <div id="audit-list"></div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div id="layout-footer"></div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/images.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/format.js"></script>
+<script src="/js/toast.js"></script>
+<script src="/js/layout.js"></script>
+<script src="/js/admin.js"></script>
+
+</body>
+</html>
