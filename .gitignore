@@ -25,6 +25,11 @@ krugosvet.db
 # Логи
 *.log
 
+# Скриншоты, которые могут случайно попасть в корень
+photo_*.jpg
+photo_*.png
+*.screenshot.*
+
 # Внутренние артефакты Claude Code
 .claude/
 
