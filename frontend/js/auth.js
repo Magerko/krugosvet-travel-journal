@@ -108,21 +108,29 @@
 
         try {
             if (mode === 'register') {
-                await API.post('/api/auth/register', data);
+                // Регистрация защищена от user enumeration: ответ одинаков и
+                // для свободного, и для занятого email. Автовхода нет —
+                // переключаем в форму входа, пользователь логинится сам.
+                const r = await API.post('/api/auth/register', data);
+                switchMode('login');
+                // Email подставим, пароль очищать необязательно — это уже шаг входа.
+                document.querySelector('input[name="email"]').value = data.email || '';
+                document.querySelector('input[name="password"]').value = '';
+                toast(r?.message || 'Аккаунт готов — войдите по своим данным.', 'ok', 5000);
             } else {
                 await API.post('/api/auth/login', data);
+                location.href = next;
             }
-            location.href = next;
         } catch (err) {
             if (err.status === 400 && err.data?.error === 'validation') {
                 for (const [f, msg] of Object.entries(err.data.fields || {})) {
                     const el = document.getElementById('err-' + f);
                     if (el) el.textContent = msg;
                 }
-            } else if (err.data?.error === 'email_taken') {
-                document.getElementById('err-email').textContent = 'Этот email уже занят';
             } else if (err.data?.error === 'invalid_credentials') {
                 document.getElementById('err-password').textContent = 'Неверный email или пароль';
+            } else if (err.status === 429) {
+                toast('Слишком много попыток. Попробуйте через минуту.', 'err');
             } else {
                 toast('Ошибка соединения с сервером', 'err');
             }

@@ -22,13 +22,22 @@ EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 @bp.post("/register")
 @limiter.limit("10 per hour", error_message="too_many_attempts")
 def register():
+    """
+    Защита от user enumeration: на корректный ввод ответ всегда одинаков
+    (200 ok), независимо от того, существует email или нет. Иначе атакующий
+    мог бы перебором узнать, какие email зарегистрированы.
+
+    Из-за этого auto-login после регистрации убран — фронт переключает
+    на форму входа, и пользователь сам логинится своими данными.
+    """
     data = get_json()
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
     full_name = (data.get("full_name") or "").strip()
     phone = (data.get("phone") or "").strip()
 
-    # Валидация — отдаём понятный код, чтобы фронт мог подсветить нужное поле
+    # Валидация полей (формат, длина) — её обнародовать безопасно: атакующий и так
+    # знает требования к email/паролю, это не сужает анонимный набор пользователей.
     errors = {}
     if not EMAIL_RE.match(email):
         errors["email"] = "Введите корректный email"
@@ -39,24 +48,26 @@ def register():
     if errors:
         return jsonify(error="validation", fields=errors), 400
 
-    if User.query.filter_by(email=email).first():
-        return jsonify(error="email_taken"), 409
+    existing = User.query.filter_by(email=email).first()
+    if existing:
+        # Не раскрываем, что email уже занят. Чтобы тайминг ответа был
+        # сравним со случаем создания — всё равно тратим время на хеш.
+        # (PBKDF2 — самая дорогая операция, без неё «занят» отвечал бы быстрее.)
+        generate_password_hash(password)
+    else:
+        user = User(
+            email=email,
+            password_hash=generate_password_hash(password),
+            full_name=full_name,
+            phone=phone or None,
+        )
+        db.session.add(user)
+        db.session.flush()
+        log_action("INSERT", "users", f"регистрация {email}", user_id=user.id)
+        db.session.commit()
 
-    user = User(
-        email=email,
-        password_hash=generate_password_hash(password),
-        full_name=full_name,
-        phone=phone or None,
-    )
-    db.session.add(user)
-    db.session.flush()
-    log_action("INSERT", "users", f"регистрация {email}", user_id=user.id)
-    db.session.commit()
-
-    # Сразу логиним юзера, чтобы он не вводил пароль ещё раз
-    session.permanent = True
-    session["user_id"] = user.id
-    return jsonify(user=user.to_dict()), 201
+    # Один и тот же ответ для обоих случаев. Фронт ведёт на форму входа.
+    return jsonify(ok=True, message="Если email свободен, аккаунт создан. Войдите по своим данным."), 200
 
 
 @bp.post("/login")
