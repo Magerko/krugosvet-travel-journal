@@ -125,6 +125,25 @@ const Icons = {
             <path d="M5 11c4.4 0 8 3.6 8 8"/>
             <circle cx="6" cy="18" r="1.5" fill="currentColor" stroke="none"/>
         </svg>`,
+
+    // Солнце — для светлой темы. Чуть «угловатое», не идеальные лучи.
+    sun: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4" fill="currentColor" fill-opacity="0.15"/>
+            <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"/>
+        </svg>`,
+
+    // Луна — для тёмной темы. Полумесяц «с пуш-эффектом».
+    moon: (size = 16) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path d="M21 13.5A9 9 0 1 1 10.5 3a7 7 0 0 0 10.5 10.5z"/>
+        </svg>`,
+
+    // Гамбургер — три полоски, средняя короче (чуть «эдиториальная» неровность).
+    menu: (size = 18) => `
+        <svg class="icon" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h11M4 17h16"/>
+        </svg>`,
 };
 
 window.Icons = Icons;

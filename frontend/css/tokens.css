@@ -31,10 +31,14 @@
     --shadow-card:  0 12px 32px rgba(15,30,60,.10);
     --shadow-pop:   0 16px 40px rgba(15,30,60,.18);
 
-    /* Шрифты */
-    --font-sans:  "PT Sans", "Helvetica Neue", Arial, sans-serif;
-    --font-serif: "PT Serif", "Source Serif 4", Georgia, serif;
-    --font-mono:  "JetBrains Mono", ui-monospace, Menlo, monospace;
+    /* Шрифты: уходим от стереотипной связки PT Sans + PT Serif + JetBrains Mono
+       (она везде в Рунете — слишком «дефолтно»). Берём:
+       — Manrope:        современный гротеск с кириллицей, тёплые формы
+       — Lora:           «журнальный» серифный, для заголовков и цитат
+       — IBM Plex Mono:  моноширинный с характером (есть кириллица) */
+    --font-sans:  "Manrope", "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Lora", "Source Serif 4", Georgia, serif;
+    --font-mono:  "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
     /* Сетка / контейнер */
     --page-padding: 56px;
