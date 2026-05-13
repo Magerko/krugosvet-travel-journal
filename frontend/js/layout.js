@@ -90,17 +90,19 @@ const Layout = (() => {
             </header>
 
             <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-                <div class="mobile-drawer__head">
-                    <a href="/" class="brand">
-                        <span class="brand__mark">${Icons.compass(20)}</span>
-                        <div class="brand__name">Кругосвет</div>
-                    </a>
-                    <button class="mobile-drawer__close" id="drawer-close" aria-label="Закрыть меню">
-                        ${Icons.close(20)}
-                    </button>
+                <div class="mobile-drawer__panel">
+                    <div class="mobile-drawer__head">
+                        <a href="/" class="brand">
+                            <span class="brand__mark">${Icons.compass(20)}</span>
+                            <div class="brand__name">Кругосвет</div>
+                        </a>
+                        <button class="mobile-drawer__close" id="drawer-close" aria-label="Закрыть меню">
+                            ${Icons.close(20)}
+                        </button>
+                    </div>
+                    <nav class="site-nav site-nav--mobile">${navHtml}</nav>
+                    <div class="mobile-drawer__actions">${userBlockHtml()}</div>
                 </div>
-                <nav class="site-nav site-nav--mobile">${navHtml}</nav>
-                <div class="mobile-drawer__actions">${userBlockHtml()}</div>
             </div>`;
     }
 
