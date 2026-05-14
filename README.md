@@ -1,6 +1,41 @@
 # Кругосвет — независимый журнал о путешествиях
 
-Информационный портал с гайдами по странам, лентой новостей туриндустрии и подборкой экскурсий.
+> **Уровень: Junior+ / Pre-Middle Fullstack**
+> Полноценный продукт от ER-диаграммы до Docker-деплоя: Python/Flask + Vanilla JS + MySQL.
+> Без фреймворков на фронте — чтобы видеть владение базой (DOM API, fetch, CSS-переменные).
+
+![Стек](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.0-000?logo=flask)
+![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-pytest-0a9396)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+Информационный портал с гайдами по странам, лентой новостей туриндустрии, подборкой экскурсий и полноценной системой бронирования.
+
+## Скриншоты
+
+| Главная | Каталог экскурсий | Детальная экскурсии |
+|---|---|---|
+| ![Главная](docs/screenshots/01-home.png) | ![Экскурсии](docs/screenshots/02-excursions.png) | ![Детальная](docs/screenshots/03-excursion-detail.png) |
+
+| Места отдыха | Лента новостей | Статья |
+|---|---|---|
+| ![Места](docs/screenshots/04-destinations.png) | ![Новости](docs/screenshots/05-news.png) | ![Статья](docs/screenshots/06-article.png) |
+
+| Авторизация | Бронирование с календарём | Личный кабинет |
+|---|---|---|
+| ![Auth](docs/screenshots/07-auth.png) | ![Бронь](docs/screenshots/08-booking-modal.png) | ![Кабинет](docs/screenshots/09-cabinet.png) |
+
+| Админка — статьи | Админка — брони |
+|---|---|
+| ![Admin Articles](docs/screenshots/10-admin-articles.png) | ![Admin Bookings](docs/screenshots/11-admin-bookings.png) |
+
+### Мобильная версия
+
+| Главная | Меню (drawer) | Тёмная тема | Бронирование |
+|---|---|---|---|
+| ![M Home](docs/screenshots/m1-home.png) | ![M Drawer](docs/screenshots/m2-drawer.png) | ![M Dark](docs/screenshots/m3-home-dark.png) | ![M Booking](docs/screenshots/m4-booking-modal.png) |
 
 ## О проекте
 
@@ -42,15 +77,18 @@ Site/
 │   ├── seed.py                — наполнение БД пользователями и демо-данными
 │   ├── requirements.txt
 │   ├── .env.example
+│   ├── extensions.py         — SQLAlchemy, Flask-WTF CSRF, Flask-Limiter
+│   ├── tests/                — 50 pytest-тестов (см. секцию ниже)
 │   └── routes/
-│       ├── _helpers.py        — login_required / admin_required / log_action
+│       ├── _helpers.py        — login_required / admin_required / log_action / clean_text
 │       ├── auth.py            — регистрация, логин, /me
 │       ├── articles.py        — публичный доступ к статьям
-│       ├── excursions.py      — экскурсии и пакеты
+│       ├── excursions.py      — экскурсии и пакеты, availability календаря
 │       ├── destinations.py    — места отдыха
 │       ├── favorites.py       — добавление/удаление в избранное
 │       ├── requests_.py       — заявки на консультацию
-│       ├── admin.py           — CRUD-эндпоинты для админки
+│       ├── bookings.py        — создание брони, оплата, отмена, история юзера
+│       ├── admin.py           — CRUD статей/экскурсий, брони, заявки, комментарии
 │       └── misc.py            — справочники
 │
 ├── frontend/                  — HTML + CSS + JS Vanilla
@@ -206,6 +244,7 @@ python app.py
 | `GET`  | `/api/excursions/` | каталог экскурсий |
 | `GET`  | `/api/excursions/featured` | подборка для главной |
 | `GET`  | `/api/excursions/<slug>` | детальная + связанные |
+| `GET`  | `/api/excursions/<id>/availability` | занятые даты на 60 дней (для календаря в модалке бронирования) |
 | `POST` | `/api/excursions/<id>/comments` | комментарий к экскурсии |
 | `GET`  | `/api/destinations/` | список мест |
 | `GET`  | `/api/destinations/<slug>` | детальная + экскурсии + статьи |
@@ -213,13 +252,52 @@ python app.py
 | `GET`  | `/api/favorites/my` | мои избранные |
 | `POST` | `/api/requests/` | оставить заявку на консультацию |
 | `GET`  | `/api/requests/my` | история моих заявок |
+| `POST` | `/api/bookings/` | создать бронь экскурсии (login required) |
+| `GET`  | `/api/bookings/my` | мои брони — отсортированы по предстоящим / истории |
+| `GET`  | `/api/bookings/<id>` | бронь по id (только владелец или админ) |
+| `POST` | `/api/bookings/<id>/pay` | mock-оплата брони (pending → paid) |
+| `POST` | `/api/bookings/<id>/cancel` | отмена брони |
+| `GET`  | `/api/csrf` | CSRF-токен для последующих state-changing запросов |
 | `GET`  | `/api/admin/stats` | KPI |
 | `GET`  | `/api/admin/audit` | журнал действий |
 | `GET/POST/PUT/DELETE` | `/api/admin/articles[/id]` | CRUD статей |
 | `GET/POST/PUT/DELETE` | `/api/admin/excursions[/id]` | CRUD экскурсий |
 | `GET`  | `/api/admin/destinations` | места отдыха |
+| `GET/PUT` | `/api/admin/bookings[/id]` | список броней + смена статуса |
 | `GET/PUT` | `/api/admin/requests[/id]` | заявки + смена статуса |
 | `GET/PUT/DELETE` | `/api/admin/comments[/id]` | модерация комментариев |
+
+## Тесты
+
+Покрытие — **50 тестов**, прогон занимает ~30 секунд. Стек: `pytest` + Flask test client + SQLite в памяти (быстро, без зависимости от MySQL).
+
+```bash
+cd backend
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # Linux / macOS
+
+pytest tests -v
+```
+
+```
+tests/test_auth.py            9 tests   — регистрация, логин, /me, защита от user enumeration
+tests/test_articles.py        9 tests   — список, фильтры, комментарии, sanitize контрольных байт
+tests/test_excursions.py      5 tests   — каталог, фильтры по стране/типу, availability
+tests/test_bookings.py        9 tests   — создание, оплата, отмена, IDOR (своя бронь / чужая / админ)
+tests/test_admin.py           6 tests   — stats, CRUD статей, защита от non-admin, audit-log
+tests/test_requests.py        5 tests   — анонимные и юзерские заявки, валидация
+tests/test_favorites.py       4 tests   — полиморфное toggle, группировка my по типам
+tests/test_security_headers.py 3 tests  — X-Frame-Options, CSP с picsum, MIME-sniffing
+```
+
+Что покрыто специально:
+- **IDOR на бронях** — два теста на «чужую бронь нельзя ни посмотреть, ни оплатить»
+- **User enumeration** — `register(taken_email)` и `register(new_email)` возвращают одинаковую структуру
+- **Sanitize управляющих символов** — посылаем `\x00\x07` в комментарий, проверяем что в БД чистый текст
+- **Прошлая дата в брони и заявке** — оба сценария отдают 400 с указанием поля
+- **CRUD-полный цикл** — создать → обновить → удалить → убедиться что в публичной выдаче пропала
+
+В `conftest.py` rate-limit отключается через `limiter.enabled = False`, иначе 50 быстрых логинов забивают лимит. CSRF тоже выключен в тестовом контексте — это стандартный паттерн для Flask-WTF.
 
 ## Темы оформления
 
@@ -235,7 +313,7 @@ python app.py
 
 ### 1. Аутентификация и хранение паролей
 
-Пароли никогда не хранятся в открытом виде. При регистрации `werkzeug.security.generate_password_hash(password)` возвращает строку вида `pbkdf2:sha256:600000$salt$hash` — это PBKDF2-SHA256 с 600 000 итераций и случайной солью. При логине сравнение через `check_password_hash`, которое **не уязвимо к timing-атакам** (constant-time comparison).
+Пароли хранятся только в виде хеша, без plaintext-копий в БД или логах. При регистрации `werkzeug.security.generate_password_hash(password)` возвращает строку вида `pbkdf2:sha256:600000$salt$hash` — это PBKDF2-SHA256 с 600 000 итераций и случайной солью. При логине используется `check_password_hash`, которая сравнивает значения в constant time, чтобы минимизировать риск тайминговых атак.
 
 📁 `backend/routes/auth.py` · модель `backend/models.py:User.password_hash`
 
@@ -311,7 +389,7 @@ python app.py
 
 ### 7. XSS (Cross-Site Scripting)
 
-Пользовательский контент (комментарии, имена, тексты заявок) **никогда** не попадает в `innerHTML` без эскейпа. Универсальный хелпер на фронте:
+Пользовательский контент (комментарии, имена, тексты заявок) во всех текущих местах рендеринга проходит через `Fmt.esc` перед вставкой в `innerHTML`. Это правило кодстайла, а не архитектурный инвариант: если в новом коде кто-то забудет вызвать `.esc`, защита в этом конкретном месте не сработает. Поэтому ниже есть и серверный sanitize-слой — defense in depth. Универсальный хелпер на фронте:
 
 ```js
 Fmt.esc(s)  // < → &lt;, > → &gt;, & → &amp;, " → &quot;, ' → &#039;
@@ -325,7 +403,7 @@ Fmt.esc(s)  // < → &lt;, > → &gt;, & → &amp;, " → &quot;, ' → &#039;
 
 ### 8. SQL injection
 
-Нет ни одной raw-SQL строки в коде проекта. Все запросы — через SQLAlchemy ORM, параметризованные. Поэтому SQL-инъекция невозможна архитектурно.
+Риск SQL-инъекций существенно снижен за счёт ORM: все запросы идут через SQLAlchemy с параметризованной подстановкой, raw-SQL строк в коде проекта на момент написания нет. Это закрывает классические векторы вроде конкатенации значений из request-параметров прямо в SQL.
 
 ```python
 # Так — правильно (ORM, параметры подставляются драйвером)
@@ -334,6 +412,8 @@ User.query.filter_by(email=email).first()
 # Так в этом проекте никто не пишет:
 db.session.execute(f"SELECT * FROM users WHERE email='{email}'")  # уязвимо
 ```
+
+При этом ORM сам по себе не делает приложение «иммунным»: если в будущем где-то появится `text("...")` или `.execute(...)` с f-string — уязвимость вернётся. Поэтому в чек-листе перед PR-ами стоит проверка `grep -E "text\(|execute\("` по бэкенду.
 
 ### 9. Безопасные HTTP-заголовки
 
@@ -413,7 +493,7 @@ LOGIN users      · ivanov@example.com вошёл в систему        [user
 - **2FA** — не реализовано. Для учебного проекта — за рамками.
 - **Email-верификация при регистрации** — нет почтового сервиса.
 - **Сброс пароля** — нет почтового сервиса. Можно добавить с любым SMTP-провайдером.
-- **Защита от SSRF** — бэкенд не делает исходящих запросов на пользовательские URL, защищать нечего.
+- **Защита от SSRF** — отдельный слой не реализован. Бэкенд на текущий момент не делает исходящих HTTP-запросов на адреса, которые подставил бы пользователь, поэтому актуальной поверхности для SSRF здесь нет. Если в будущем появятся фичи вроде «загрузить аватар по URL», понадобится валидация хоста и блокировка приватных диапазонов.
 - **Загрузка файлов** — эндпоинтов нет; обложки берутся из Picsum CDN с детерминированными seed-ами.
 - **CAPTCHA на формах** — не требуется при rate limit.
 
