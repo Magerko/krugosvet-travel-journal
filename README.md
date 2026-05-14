@@ -8,7 +8,7 @@
 ![Flask](https://img.shields.io/badge/Flask-3.0-000?logo=flask)
 ![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-pytest-0a9396)
+![Tests](https://github.com/Magerko/krugosvet-travel-journal/actions/workflows/tests.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 Информационный портал с гайдами по странам, лентой новостей туриндустрии, подборкой экскурсий и полноценной системой бронирования.
@@ -266,6 +266,32 @@ python app.py
 | `GET/PUT` | `/api/admin/bookings[/id]` | список броней + смена статуса |
 | `GET/PUT` | `/api/admin/requests[/id]` | заявки + смена статуса |
 | `GET/PUT/DELETE` | `/api/admin/comments[/id]` | модерация комментариев |
+
+## Миграции БД
+
+Схема версионируется через **Flask-Migrate** (обёртка над Alembic). Initial-миграция лежит в `backend/migrations/versions/`.
+
+```bash
+cd backend
+flask --app app db upgrade          # накатить все миграции на актуальную БД
+flask --app app db migrate -m "..." # сгенерировать новую миграцию по изменениям моделей
+flask --app app db downgrade        # откатить на одну
+```
+
+В Docker `entrypoint.sh` гонит `db upgrade` перед стартом приложения — поэтому свежеподнятый контейнер всегда на актуальной схеме без ручных шагов.
+
+Для тестов миграции пропускаются: `conftest.py` использует SQLite-in-memory и `db.create_all()` для скорости (миграции на каждом тесте — лишний overhead).
+
+## CI/CD
+
+`.github/workflows/tests.yml` — GitHub Actions, который:
+
+- запускается на каждый `push` в `main` и на каждый PR против `main`,
+- ставит Python 3.12, поднимает `backend/requirements.txt`,
+- гоняет `pytest tests -v` в SQLite-режиме,
+- падает, если хотя бы один тест красный.
+
+Бейдж со статусом в шапке README обновляется автоматически.
 
 ## Тесты
 

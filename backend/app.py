@@ -8,7 +8,7 @@ from pathlib import Path
 from flask import Flask, send_from_directory, jsonify
 
 from config import Config
-from extensions import db, csrf, limiter
+from extensions import db, migrate, csrf, limiter
 from flask_wtf.csrf import generate_csrf, CSRFError
 
 
@@ -20,6 +20,7 @@ def create_app():
     app = Flask(__name__, static_folder=None)
     app.config.from_object(Config)
     db.init_app(app)
+    migrate.init_app(app, db)
     csrf.init_app(app)
     limiter.init_app(app)
 

@@ -18,28 +18,35 @@ backend/.env
 .DS_Store
 Thumbs.db
 
-# Р›РѕРєР°Р»СЊРЅР°СЏ Р‘Р” (SQLite-СЂРµР¶РёРј)
+# Локальная БД (SQLite-режим)
 *.db
 krugosvet.db
 
-# Р›РѕРіРё
+# Логи
 *.log
 
-# РЎРєСЂРёРЅС€РѕС‚С‹, РєРѕС‚РѕСЂС‹Рµ РјРѕРіСѓС‚ СЃР»СѓС‡Р°Р№РЅРѕ РїРѕРїР°СЃС‚СЊ РІ РєРѕСЂРµРЅСЊ
+# Переменные окружения compose (на root-уровне) — секреты прода
+/.env
+
+# Скриншоты в корне (использую для дебага, не для коммита)
 photo_*.jpg
 photo_*.png
 *.screenshot.*
 
-# Р’РЅСѓС‚СЂРµРЅРЅРёРµ Р°СЂС‚РµС„Р°РєС‚С‹ Claude Code
+# Внутренние артефакты Claude Code
 .claude/
 
-# Docker volumes (РµСЃР»Рё РєС‚Рѕ-С‚Рѕ РІС‹РЅРµСЃРµС‚ РЅР° С…РѕСЃС‚)
+# Docker volumes (если кто-то вынесет на хост)
 docker/data/
 
-# Локальная диагностика
+# Локальные диагностические скрипты
 _inspect_*.py
 _multi_*.py
+_check*.py
 _mobile_*.png
 _hero_*.png
 _m_*.png
-
+_top.png
+_drawer.png
+_book_*.png
+_check_after.png

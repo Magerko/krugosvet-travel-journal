@@ -1,0 +1,17 @@
+# Dev-настройки. Compose автоматически объединяет этот файл с docker-compose.yml.
+# Прямые значения здесь перезаписывают ${VAR} из main compose, поэтому в dev
+# не нужен .env — всё работает «из коробки».
+#
+# В проде запускать с явным флагом `-f docker-compose.yml` чтобы override
+# не подхватился, и брать секреты из реального .env.
+services:
+  db:
+    environment:
+      MYSQL_ROOT_PASSWORD: krugosvet
+      MYSQL_PASSWORD:      krugosvet
+
+  app:
+    environment:
+      SECRET_KEY:  dev-secret-not-for-prod
+      DB_PASSWORD: krugosvet
+      APP_MODE:    dev

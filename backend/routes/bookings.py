@@ -3,8 +3,10 @@
 """
 
 import re
+import secrets
 from datetime import datetime, date
 from flask import Blueprint, jsonify
+from sqlalchemy.exc import IntegrityError
 
 from extensions import db
 from models import Booking, Excursion
@@ -15,16 +17,31 @@ bp = Blueprint("bookings", __name__)
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"^[\d\s\+\-\(\)]{7,30}$")
 
+# Алфавит без 0/O и 1/I — чтобы код не путали при чтении на бумаге/телефоне.
+# 32^6 = ~1 млрд комбинаций, при низком трафике коллизии практически невозможны.
+_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
-def _next_code():
-    last = db.session.query(Booking.code).order_by(Booking.id.desc()).first()
-    if not last:
-        return "B-1284"
-    try:
-        n = int(last[0].split("-")[1]) + 1
-    except (ValueError, IndexError):
-        n = 1300
-    return f"B-{n}"
+
+def _generate_code():
+    return "B-" + "".join(secrets.choice(_CODE_ALPHABET) for _ in range(6))
+
+
+def _save_booking_with_unique_code(make_booking, retries=5):
+    """
+    Сохраняет бронь с уникальным сгенерированным кодом.
+    При коллизии (что крайне маловероятно) — повторяем до retries раз.
+    Это закрывает race condition при параллельных INSERT'ах.
+    """
+    for _ in range(retries):
+        booking = make_booking(_generate_code())
+        db.session.add(booking)
+        try:
+            db.session.flush()
+            return booking
+        except IntegrityError:
+            db.session.rollback()
+    # Если 5 раз подряд получили коллизию — что-то фундаментально не так.
+    raise RuntimeError("Не удалось сгенерировать уникальный код брони за 5 попыток")
 
 
 @bp.post("/")
@@ -75,8 +92,8 @@ def create():
     discount = int(base * 0.05) if paid_count > 0 else 0
     total = base - discount
 
-    booking = Booking(
-        code=_next_code(),
+    booking = _save_booking_with_unique_code(lambda code: Booking(
+        code=code,
         user_id=u.id,
         excursion_id=exc.id,
         tourists=tourists,
@@ -87,9 +104,7 @@ def create():
         discount=discount,
         total_price=total,
         status="pending",
-    )
-    db.session.add(booking)
-    db.session.flush()
+    ))
 
     log_action("INSERT", "bookings",
                f"{booking.code} · {exc.title} · {tourists} чел.",

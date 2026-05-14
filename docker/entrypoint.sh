@@ -26,9 +26,15 @@ done
 # Небольшая пауза — MySQL может слушать порт ещё до того, как готов принимать запросы.
 sleep 2
 
-echo "[entrypoint] Создаю таблицы и заполняю справочники..."
+echo "[entrypoint] Применяю миграции схемы (flask db upgrade)..."
+python -m flask --app app db upgrade || {
+    echo "[entrypoint] db upgrade упал — возможно БД ещё не готова"
+    exit 1
+}
+
+echo "[entrypoint] Наполняю справочники и пользователей..."
 python -m flask --app app seed || {
-    echo "[entrypoint] seed упал — продолжаем (возможно БД ещё не готова, попробуйте перезапустить)"
+    echo "[entrypoint] seed упал — продолжаем"
 }
 
 # В $APP_MODE=prod запускаем gunicorn, иначе — встроенный flask для удобства разработки

@@ -107,3 +107,21 @@ def test_booking_admin_can_view_any(admin_client, auth_client):
     }).get_json()["booking"]
     r = admin_client.get(f"/api/bookings/{created['id']}")
     assert r.status_code == 200
+
+
+def test_booking_codes_are_unique_and_well_formed(auth_client):
+    """
+    Создаём подряд несколько броней — у каждой свой код, формат "B-XXXXXX"
+    из безопасного алфавита (без 0/O/1/I). Это страховка от race condition
+    на параллельных INSERT'ах.
+    """
+    import re as _re
+    codes = set()
+    for _ in range(5):
+        c = auth_client.post("/api/bookings/", json={
+            "excursion_id": 1, "tourists": 1, "departure_date": _tomorrow(),
+            "contact_phone": "+1 (555) 010-0000", "contact_email": "ivanov@example.com",
+        }).get_json()["booking"]["code"]
+        assert _re.match(r"^B-[A-HJ-NP-Z2-9]{6}$", c), f"bad code: {c}"
+        codes.add(c)
+    assert len(codes) == 5  # все разные
