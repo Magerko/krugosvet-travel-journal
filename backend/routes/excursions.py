@@ -2,10 +2,12 @@
 Экскурсии и тур-пакеты — публичные листинги и детальная страница.
 """
 
+from datetime import date, timedelta
 from flask import Blueprint, jsonify, request
+from sqlalchemy import func
 
 from extensions import db
-from models import Excursion, Destination, Country, Comment, Favorite
+from models import Excursion, Destination, Country, Comment, Favorite, Booking
 from ._helpers import current_user, login_required, get_json, clean_text
 
 bp = Blueprint("excursions", __name__)
@@ -106,6 +108,38 @@ def detail(slug):
         comments=[c.to_dict() for c in comments],
         related=[r.to_dict() for r in related],
         in_favorites=in_fav,
+    )
+
+
+@bp.get("/<int:exc_id>/availability")
+def availability(exc_id):
+    """
+    Список дат на ближайшие 60 дней с количеством существующих броней.
+    Используется в модалке бронирования для показа занятых дат.
+    Cчитаем брони со статусом pending/paid — отменённые не учитываем.
+    """
+    exc = Excursion.query.get_or_404(exc_id)
+    today = date.today()
+    horizon = today + timedelta(days=60)
+
+    rows = (db.session.query(Booking.departure_date,
+                             func.count(Booking.id).label("cnt"),
+                             func.sum(Booking.tourists).label("people"))
+            .filter(Booking.excursion_id == exc.id,
+                    Booking.status.in_(("pending", "paid")),
+                    Booking.departure_date >= today,
+                    Booking.departure_date <= horizon)
+            .group_by(Booking.departure_date)
+            .all())
+
+    return jsonify(
+        excursion_id=exc.id,
+        booked=[
+            {"date": r.departure_date.isoformat(),
+             "bookings": int(r.cnt),
+             "people": int(r.people or 0)}
+            for r in rows
+        ],
     )
 
 
