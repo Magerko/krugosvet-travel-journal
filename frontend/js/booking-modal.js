@@ -7,7 +7,14 @@ const BookingModal = (() => {
                        'июля','августа','сентября','октября','ноября','декабря'];
     const RU_DOW = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
-    function ymd(d) { return d.toISOString().slice(0, 10); }
+    // Локально-консистентный YYYY-MM-DD. toISOString() даёт UTC,
+    // и в часовых поясах +X локальная полночь "перепрыгивает" на предыдущий день.
+    function ymd(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    }
 
     function buildCalendar(weeks = 4) {
         // Сетка с понедельника текущей недели на N недель вперёд
